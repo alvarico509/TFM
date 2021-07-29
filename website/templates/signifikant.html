@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Signifikant {% endblock %}
+{% block content %}
+
+	<header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image: url(images/img_bg_1.jpg)">
+		<div class="overlay"></div>
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-md-12 col-md-offset-0 text-left">
+					<div class="row row-mt-15em">
+
+						<div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
+							<span class="intro-text-small">Hey Finn, hello! (Or anyone else who is reading it.)</span>
+							<h1>About the project</h1>	
+							<p>This website is 3 o 4 days old, please, keep it in mind.</p>
+							<p>I don't know yet if I will write it in spanish or english, that is why you will see a mix.</p>
+						</div>
+						
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</header>
+
+
+<br>	
+<center>
+
+								<h2>The Thesis</h2>
+									<p>The goals of this project are not precisely defined yet. I can easily achieve the requirements to get a passing score, but I whant to challenge myself and see how far I can go now.</p>
+									<p>Building a regression model that predicts the price of a car using a dataset of 9million rows and 66 columns would be laborious but easy, so I decided to go further.</p>
+									<p>Before I complete any of the parts of the project, I have to be sure that I can accomplish them, that is why right now the project is a bit chaotic, but it is under control.</p>
+								<h2>The Model</h2>
+									<p>Using the kaggle kernel (similar to jupyter notebooks) I have built an easy model using just the numeric columns and removing all the NA values.</p>
+									<p>What I wanted here was just to extract a PICKLE so that I could use it later on the Django Application</p>
+									<p>Don't pay attention to it. It even has a column called "listing_id" which obviously contributes nothing to the model.</p>
+									<p>I know I can perform de EDA, clean the data and do some feature engineering, that is why I will do that later.</p>
+									<p>I will also try to apply models such as Lasso, Elasticnet, Ensemble (gradient boosting) or even KNN if possible.</p>
+									<p>If possible, I will perform another model that, given a period of time (within the customer wants to sell the car), the model will output a prediction.</p>
+									<p>Imagine a customer that is in a hurry and needs the money ASAP. The model will output a price with a maximized benifit within a month. If the customer wants to get as much as possible,</p>
+									<p> the model will consider (for example) a period of six months and will output a higher price.</p>
+								<h2>The Website</h2>
+									<p>The website is not a requirement in our Thesis at all, but deploying models is something I want to learn and I thought it would be a good idea to do it now. Moreover, I am learning new technologies and languages.</p>
+									<p>Last week I knew barely nothing about CSS, HTML, Javascript or Django, and after 3 or 4 days I have almost built the skeleton of the website. </p>
+									<p>The structure of the website will (probably) be:</p>
+									<p>The home page, with a little information about our "company", the model... and a "catchy" appearance. I have not decided yet if I will keep a short form that will redirect to another one where the user will fulfill more car specs, </p>
+								    <p>or if I will delete the intro form.</p>
+									<p>A team section with a description of my colleagues and I</p>
+									<p>The project section will consist of the "presentation" of the project. We will be using it during our presentation of the project instead of a PPT document.</p>
+									<p>The model section. The main page form will redirect here. There will be a form to fulfill with car specs so that the model predicts the price. IS NOT WORKING YET. I am still learning about forms. It will work soon.</p>
+									<p>The signifikant section is just something I built to explain this to you, so that you see what I can do.</p>
+									<p>I am considering the option of integrating some intereactive visualizations, if possible, with tableau. But I am still thinking how to integrate it. It needs to make sense...</p>
+								<h2>The Architecture/Engineering</h2>
+									<p>This is the tricky part.</p>
+									<p>The data is 9Gb size. I can train my models on kaggle notebooks easily, that is not a problem. I can then extract the pickle and use it on the django APP. I can make predictions locally or use a server to run them. </p>
+								    <p>It would be light computationally meaning, so, no problem here.</p>
+									<p>Making the website available for everyone. I don't know yet, but I learn how. I guess I will deploy it to Heroku. It is supposed to be easy.</p>
+									<p>Cascade dropdown forms and SQL:</p>
+									<p>I am considering creating a database and connecting it to my django app. It will be useful and I thing it would be a good programming practice.</p>
+									<p>In my forms, there will be dropdown menus that will be giving options to the customers. (You start with 'Car Brand', let's say Audi, then 'Model'. Here I want to have every Audi model, not EVERY model. There is no Audi Golf...</p>
+									<p>I have investigated and the database might be the best option.</p>
+									<p></p>
+									<p>So, this is a little presentation of what I am doing. Thank you for your time!!!</p>
+									<p>Alvaro</p>
+</center>
+
+
+{% endblock %}	

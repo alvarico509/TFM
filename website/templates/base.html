@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE HTML>
+<!--
+	Mileage by Alvaro Lozano Alonso
+	URL: http:// la tendré que definir luego
+-->
+<html>
+	<head>
+	<link rel="icon" href="{% static 'website/images/favicon.png' %}">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Mileage &mdash; {% block title %} Price my car {% endblock %}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Website to calculate the value of your car using a machine learning model" />
+	<meta name="keywords" content="Value my car, IA, Machine Learning, Modelling" />
+	<meta name="author" content="Alvaro Lozano Alonso" />
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="{% static 'website/css/animate.css' %}">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="{% static 'website/css/icomoon.css' %}">
+	<!-- Themify Icons-->
+	<link rel="stylesheet" href="{% static 'website/css/themify-icons.css' %}">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="{% static 'website/css/bootstrap.css' %}">
+
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="{% static 'website/css/magnific-popup.css' %}">
+
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="{% static 'website/css/bootstrap-datepicker.min.css' %}">
+
+	<!-- Owl Carousel  -->
+	<link rel="stylesheet" href="{% static 'website/css/owl.carousel.min.css' %}">
+	<link rel="stylesheet" href="{% static 'website/css/owl.theme.default.min.css' %}">
+
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="{% static 'website/css/style.css' %}">
+
+	<!-- Modernizr JS -->
+	<script src="{% static 'website/js/modernizr-2.6.2.min.js' %}"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="{% static 'website/js/respond.min.js' %}"></script>
+	<![endif]-->
+
+	</head>
+	<body>
+		
+	<div class="gtco-loader"></div>
+	
+	<div id="page">
+
+	
+	<!-- <div class="page-inner"> -->
+	<nav class="gtco-nav" role="navigation">
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-sm-4 col-xs-12">
+					<div id="gtco-logo"><a href="{% url 'home' %}">Mileage<em>.</em></a></div>
+				</div>
+				<div class="col-xs-8 text-right menu-1">
+					<ul>
+						<li><a href="{% url 'home' %}">Home</a></li>
+						<li><a href="{% url 'project' %}">Project</a></li>
+						<li><a href="{% url 'model' %}">Model</a></li>
+						<li><a href="{% url 'team' %}">Team</a></li>
+						<li><a href="{% url 'contact' %}">Contact</a></li>
+					</ul>	
+				</div>
+			</div>
+			
+		</div>
+	</nav>
+	
+
+{% block content %}
+
+{% endblock %}
+
+<hr class="rounded">
+
+<footer id="gtco-footer" role="contentinfo">
+		<div class="gtco-container">
+			<div class="row row-p	b-md">
+
+				<div class="col-md-6">
+					<div class="gtco-widget">
+						<h3>About Us</h3>
+						<p>Mileage is a project that was born as the thesis of a master's degree in data science of five colleagues. The project starts from a database of second-hand vehicles and is fully developed to offer a service to the customer. It goes through the phases of: treatment and processing of the original data, screening and enrichment of variables, feature engineering, creation of different models, selection of the best model, deployment of the model to an application and implementation of the application on a web page.</p>
+					</div>
+				</div>
+
+				<div class="col-md-2 col-md-push-1">
+					<div class="gtco-widget">
+						<h3>Linkedin Profiles</h3>
+						<ul class="gtco-footer-links">
+							<li><a href="https://www.linkedin.com/in/alvaro-lozano-alonso/">Alvaro Lozano</a></li>
+							<li><a href="https://www.linkedin.com/in/andrea-lizondo-requeni-64b88489/">Andrea Lizondo</a></li>
+							<li><a href="https://www.linkedin.com/in/mario-muriel-maillo-329620a4/">Mario Muriel</a></li>
+							<li><a href="https://www.linkedin.com/in/pablo-abad-aparicio-68a13a154/">Pablo Abad</a></li>
+							<li><a href="https://www.linkedin.com/in/pablo-casero-palmero/">Pablo Casero</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col-md-3 col-md-push-1">
+					<div class="gtco-widget">
+						<h3>Get In Touch</h3>
+						<ul class="gtco-quick-contact">
+							<li><a href="#"><i class="icon-phone"></i> +34 650 10 11 37</a></li>
+							<li><a href="#"><i class="icon-mail2"></i> a.lozano.alonso@gmail.com</a></li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row copyright">
+				<div class="col-md-12">
+					<p class="pull-left">
+						<small class="block">&copy; 2021. All Rights Reserved.</small> 
+						<small class="block">Designed by <a href="https://freehtml5.co/" target="_blank">Alvaro Lozano</a> Images: <a href="http://unsplash.com/" target="_blank">Unsplash</a></small>
+					</p>
+					<p class="pull-right">
+						<ul class="gtco-social-icons pull-right">
+						    	<img width="200" height=auto src="{% static 'website/images/full_logo.png' %}">
+						</ul>
+					</p>
+				</div>
+			</div>
+
+		</div>
+	</footer>
+	<!-- </div> -->
+
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+	</div>
+	
+	<!-- jQuery -->
+	<script src="{% static 'website/js/jquery.min.js' %}"></script>
+	<!-- jQuery Easing -->
+	<script src="{% static 'website/js/jquery.easing.1.3.js' %}"></script>
+	<!-- Bootstrap -->
+	<script src="{% static 'website/js/bootstrap.min.js' %}"></script>
+	<!-- Waypoints -->
+	<script src="{% static 'website/js/jquery.waypoints.min.js' %}"></script>
+	<!-- Carousel -->
+	<script src="{% static 'website/js/owl.carousel.min.js' %}"></script>
+	<!-- countTo -->
+	<script src="{% static 'website/js/jquery.countTo.js' %}"></script>
+
+	<!-- Stellar Parallax -->
+	<script src="{% static 'website/js/jquery.stellar.min.js' %}"></script>
+
+	<!-- Magnific Popup -->
+	<script src="{% static 'website/js/jquery.magnific-popup.min.js' %}"></script>
+	<script src="{% static 'website/js/magnific-popup-options.js' %}"></script>
+	
+	<!-- Datepicker -->
+	<script src="{% static 'website/js/bootstrap-datepicker.min.js' %}"></script>
+	
+
+	<!-- Main -->
+	<script src="{% static 'website/js/main.js' %}"></script>
+
+	</body>
+</html>
+

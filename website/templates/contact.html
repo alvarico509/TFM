@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Contact {% endblock %}
+{% block content %}
+
+	<header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image: url({% static 'website/images/img_bg_11.jpg' %})">
+		<div class="overlay"></div>
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-md-12 col-md-offset-0 text-left">
+					<div class="row row-mt-15em">
+
+						<div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
+							<span class="intro-text-small">Don't be shy</span>
+							<h1>Get In Touch</h1>	
+						</div>
+						
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</header>
+
+
+	<div class="gtco-section border-bottom">
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+					<h2>Contact information</h2>
+					<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="col-md-6 animate-box">
+					<h3>Email us!</h3>
+					<form action="{% url 'contact' %}">
+						{% csrf_token %}
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label class="sr-only" for="name">Name</label>
+								<input type="text" id="name" class="form-control" placeholder="Name">
+							</div>
+							
+						</div>
+
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label class="sr-only" for="email">Email</label>
+								<input type="text" id="email" class="form-control" placeholder="Email">
+							</div>
+						</div>
+
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label class="sr-only" for="subject">Subject</label>
+								<input type="text" id="subject" class="form-control" placeholder="Subject">
+							</div>
+						</div>
+
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label class="sr-only" for="message">Message</label>
+								<textarea name="message" id="message" cols="30" rows="10" class="form-control" placeholder="Message"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<input type="submit" value="Send" class="btn btn-primary">
+						</div>
+
+					</form>		
+				</div>
+				<div class="col-md-5 col-md-push-1 animate-box">
+					
+					<div class="gtco-contact-info">
+						<h3>Contact information</h3>
+						<ul>
+							<li class="address">Universidad Complutense de Madrid <br> Av. de Filipinas, 3, 28003 Madrid</li>
+							<li class="phone"><a href="tel://1234567920">+34650101137</a></li>
+							<li class="email"><a href="mailto:info@yoursite.com">a.lozano.alonso@gmail.com</a></li>
+						</ul>
+					</div>
+
+
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}	
