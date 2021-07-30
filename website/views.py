@@ -16,6 +16,7 @@ import numpy as np
 import os
 
 
+
 # Create your views here.
 def home(request):
 	return render(request, 'home.html', {})
@@ -48,7 +49,7 @@ import pickle
 from django.conf import settings
 
 models_folder = settings.BASE_DIR / 'models_folder'
-file_path = os.path.join(models_folder, os.path.basename(pickle))
+file_path = os.path.join(models_folder, os.path.basename("pickle"))
 myModel = pickle.load(open(file_path, "rb+"))
 
 
