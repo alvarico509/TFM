@@ -44,7 +44,14 @@ def contact(request):
 
 
 import pickle
-myModel = pickle.load(open('/Users/alvarolozanoalonso/Desktop/project_tfm/pickle/pickle','rb+'))
+from django.conf import settings
+
+models_folder = settings.BASE_DIR / 'models_folder'
+file_path = os.path.join(models_folder, os.path.basename(pickle))
+myModel = pickle.load(open(file_path, "rb+"))
+
+
+
 
 
 def model(request):
