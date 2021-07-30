@@ -10,3 +10,6 @@ sqlparse==0.3.0
 whitenoise==5.0.1
 djangorestframework==3.11.2
 django-widget-tweaks
+sklearn
+pandas
+numpy
