@@ -53,9 +53,6 @@ file_path = os.path.join(models_folder, os.path.basename("pickle"))
 myModel = pickle.load(open(file_path, "rb+"))
 
 
-
-
-
 def model(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -101,6 +98,13 @@ def prediction(request):
 													   'predictedPrice': predictedPrice})
 		else:
 			return render(request, 'model.html', {'form': form})
+
+def getModel(request):
+    make_name = request.POST.get('make_name')
+    print(make_name)
+    print('alvaro, hemos llegado aqui')
+    model_name = return_model_by_make(make_name)
+    return JsonResponse({'model_name': model_name})
 
 
 

@@ -1,4 +1,44 @@
 from django import forms
+from .models import makeModel
+import json
+
+def readJson(filename):
+    with open(filename, 'r') as fp:
+        return json.load(fp)
+
+def get_make():
+    """ GET MAKE SELECTION """
+    #json_folder = settings.BASE_DIR / "JSON"
+    #file_path = os.path.join(json_folder, os.path.basename("countries_states_cities"))
+    filepath = '/Users/alvarolozanoalonso/desktop/project_tfm/tfm/JSON/make_model_A.json'
+    all_data = readJson(filepath)
+    all_makes = [('-----', '---Select a Make---')]
+
+    for x in all_data:
+        if (x['make_name'], x['make_name']) in all_makes:
+            continue
+        else:
+            y = (x['make_name'], x['make_name'])
+            all_makes.append(y)
+
+    return all_makes
+
+def return_model_by_make(make):
+    """ GET MODEL SELECTION BY MAKE INPUT """
+    #json_folder = settings.BASE_DIR / "JSON"
+    #file_path = os.path.join(json_folder, os.path.basename("countries_states_cities"))
+    filepath = '/Users/alvarolozanoalonso/desktop/project_tfm/tfm/JSON/make_model_A.json'
+    all_data = readJson(filepath)
+
+    all_models = []
+
+    for x in all_data:
+        if x['make_name'] == make:
+            y = (x['model_name'], x['model_name'])
+            all_models.append(x['model_name'])
+
+    return all_models
+
 
 IS_NEW_CHOICES = [
     ('1', 'Yes'),
@@ -75,9 +115,18 @@ ENGINE_TYPE_CHOICES = [
     ('W16', 'W16'),
 ]
 
-
 class ContactForm(forms.Form):
     your_name = forms.CharField(max_length=30)
+    make_name = forms.ChoiceField(
+                    choices = get_make(),
+                    required = True,
+                    label='This is the make!',
+                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_make_name'}),
+                    )
+    class Meta:
+            model = makeModel
+            fields = ('make_name', 'model_name')
+
     is_new = forms.CharField(label='Is the car (barely) new?', widget=forms.Select(choices=IS_NEW_CHOICES))
     body_type = forms.CharField(label='What is the type of the car?', widget=forms.Select(choices=BODY_TYPE_CHOICES))
     fuel_type = forms.CharField(widget=forms.Select(choices=FUEL_TYPE_CHOICES))
@@ -94,7 +143,6 @@ class ContactForm(forms.Form):
     city_fuel_economy = forms.FloatField(required=True, initial=20, widget=forms.NumberInput(attrs={'id': 'form_city_fuel_economy', 'step': "0.1"}))
     highway_fuel_economy = forms.FloatField(required=True, initial=20, widget=forms.NumberInput(attrs={'id': 'form_highway_fuel_economy', 'step': "0.1"}))
     maximum_seating = forms.IntegerField(required=True, initial=5, widget=forms.NumberInput(attrs={'id': 'form_maximum_seating', 'step': "1"}))
-
 
     def clean(self):
         cleaned_data = super(ContactForm, self).clean()
@@ -119,5 +167,15 @@ class ContactForm(forms.Form):
             and not is_new and not body_type and not fuel_type and not exterior_color and not transmission and not wheel_system
             and not engine_type):
             raise forms.ValidationError('Some fields have errors!')
+
+
+    
+
+
+
+            
+
+
+
 
 
