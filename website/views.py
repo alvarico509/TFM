@@ -82,25 +82,29 @@ def prediction(request):
 	if request.method == 'POST':
 		form = ContactForm(request.POST)
 		if form.is_valid():
-			name = form.cleaned_data.get('name')
-			daysonmarket = form.cleaned_data.get('daysonmarket')
-			engine_displacement = form.cleaned_data.get('engine_displacement')
+			your_name = form.cleaned_data.get('your_name')
 			horsepower = form.cleaned_data.get('horsepower')
-			latitude = form.cleaned_data.get('latitude')
-			listing_id = form.cleaned_data.get('listing_id')
-			longitude = form.cleaned_data.get('longitude')
+			engine_displacement = form.cleaned_data.get('engine_displacement')
 			mileage = form.cleaned_data.get('mileage')
-			savings_amount = form.cleaned_data.get('savings_amount')
-			seller_rating = form.cleaned_data.get('seller_rating')
-			sp_id = form.cleaned_data.get('sp_id')
+			transmission_display = form.cleaned_data.get('transmission_display')
 			year = form.cleaned_data.get('year')
-			car_specs = pd.DataFrame({"daysonmarket": daysonmarket, "engine_displacement": engine_displacement, "horsepower": horsepower, "latitude": latitude,
-	       									  "listing_id": listing_id, "longitude": longitude, "mileage": mileage, "savings_amount": savings_amount, "seller_rating": seller_rating,
-	       									  "sp_id": sp_id, "year": year}, index=[0]).to_numpy().reshape(1,-1)
+			fuel_tank_volume = form.cleaned_data.get('fuel_tank_volume')
+			city_fuel_economy = form.cleaned_data.get('city_fuel_economy')
+			highway_fuel_economy = form.cleaned_data.get('highway_fuel_economy')
+			maximum_seating = form.cleaned_data.get('maximum_seating')
+			car_specs = pd.DataFrame({"horsepower": horsepower, "engine_displacement": engine_displacement, "mileage": mileage, "transmission_display": transmission_display,
+	       									  "year": year, "fuel_tank_volume": fuel_tank_volume, "city_fuel_economy": city_fuel_economy, "highway_fuel_economy": highway_fuel_economy, 
+	       									  "maximum_seating": maximum_seating}, index=[0]).to_numpy().reshape(1,-1)
 			predictedPrice = round(int(myModel.predict(car_specs)))
 
 			return render(request, 'prediction.html', {'name': name,
 													   'predictedPrice': predictedPrice})
 		else:
 			return render(request, 'model.html', {'form': form})
+
+
+
+
+
+
 

@@ -1,34 +1,123 @@
 from django import forms
 
+IS_NEW_CHOICES = [
+    ('1', 'Yes'),
+    ('0', 'No'),
+    ]
+
+BODY_TYPE_CHOICES = [
+    ('Convertible', 'Convertible'),
+    ('Coupe', 'Coupe'),
+    ('Hatchback', 'Hatchback'),
+    ('Minivan', 'Minivan'),
+    ('Pickup Truck', 'Pickup Truck'),
+    ('SUV / Crossover', 'SUV / Crossover'),
+    ('Sedan', 'Sedan'),
+    ('Van', 'Van'),
+    ('Wagon', 'Wagon'),
+]
+
+FUEL_TYPE_CHOICES = [
+    ('Gasoline', 'Gasoline'),
+    ('Diesel', 'Diesel'),
+    ('Hybrid', 'Hybrid'),
+    ('Biodiesel', 'Biodiesel'),
+    ('Compressed Natural Gas', 'Compressed Natural Gas'),
+    ('Flex Fuel Vehicle', 'Flex Fuel Vehicle'),
+]
+
+EXTERIOR_COLOR_CHOICES = [
+    ('BLACK', 'Black'),
+    ('BLUE', 'Blue'),
+    ('BROWN', 'Brown'),
+    ('GOLD', 'Gold'),
+    ('GRAY', 'Gray'),
+    ('GREEN', 'Green'),
+    ('ORANGE', 'Orange'),
+    ('PINK', 'Pink'),
+    ('PURPLE', 'Purple'),
+    ('RED', 'Red'),
+    ('SILVER', 'Silver'),
+    ('TEAL', 'Teal'),
+    ('UNKNOWN', 'Unknown'),
+    ('WHITE', 'White'),
+    ('YELLOW', 'Yellow'),
+]
+
+TRANSMISSION_CHOICES = [
+    ('A', 'Automatic (A)'),
+    ('M', 'Manual (M)'),
+    ('Dual Clutch', 'Dual Clutch Transmission (DCT)'),
+    ('CVT', 'Continuously Variable Transmission (CVT)'),
+]
+
+WHEEL_SYSTEM_CHOICES = [
+    ('RWD', 'Rear Wheel Drive (RWD)'),
+    ('FWD', 'Forward Wheel Drive (FWD)'),
+    ('AWD', 'All Wheel Drive (AWD)'),
+    ('4WD', '4 Wheel Drive (4WD)'),
+    ('4x2', '2 Wheel Drive (4x2)'),
+]
+
+ENGINE_TYPE_CHOICES = [
+    ('I2', 'Inline 2 cylinders'),
+    ('I3', 'Inline 3 cylinders'),
+    ('I4', 'Inline 4 cylinders'),
+    ('I5', 'Inline 5 cylinders'),
+    ('I6', 'Inline 6 cylinders'),
+    ('H4', 'Horizontal 4 cylinders'),
+    ('H6', 'Horizontal 6 cylinders'),
+    ('V6', 'V6'),
+    ('V8', 'V8'),
+    ('V10', 'V10'),
+    ('V12', 'V12'),
+    ('W12', 'W12'),
+    ('W16', 'W16'),
+]
+
+
 class ContactForm(forms.Form):
-    name = forms.CharField(max_length=30)
-    daysonmarket = forms.FloatField(required=True, initial=22, widget=forms.NumberInput(attrs={'id': 'form_daysonmarket', 'step': "1"}))
-    engine_displacement = forms.FloatField(required=True, initial=3800, widget=forms.NumberInput(attrs={'id': 'form_engine_displacement', 'step': "1"}))
-    horsepower = forms.FloatField(required=True, initial=197, widget=forms.NumberInput(attrs={'id': 'form_horsepower', 'step': "1"}))
-    latitude = forms.FloatField(required=True, initial=423896, widget=forms.NumberInput(attrs={'id': 'form_latitude', 'step': "1"}))
-    listing_id = forms.FloatField(required=True, initial=279567433, widget=forms.NumberInput(attrs={'id': 'form_listing_id', 'step': "1"}))
-    longitude = forms.FloatField(required=True, initial=7157, widget=forms.NumberInput(attrs={'id': 'form_longitude', 'step': "1"}))
-    mileage = forms.FloatField(required=True, initial=119762, widget=forms.NumberInput(attrs={'id': 'form_mileage', 'step': "1"}))
-    savings_amount = forms.FloatField(required=True, initial=2355, widget=forms.NumberInput(attrs={'id': 'form_savings_amount', 'step': "1"}))
-    seller_rating = forms.FloatField(required=True, initial=4, widget=forms.NumberInput(attrs={'id': 'form_seller_rating', 'step': "1"}))
-    sp_id = forms.FloatField(required=True, initial=389417, widget=forms.NumberInput(attrs={'id': 'form_sp_id', 'step': "1"}))
-    year = forms.FloatField(required=True, initial=2010, widget=forms.NumberInput(attrs={'id': 'form_year', 'step': "1"}))
+    your_name = forms.CharField(max_length=30)
+    is_new = forms.CharField(label='Is the car (barely) new?', widget=forms.Select(choices=IS_NEW_CHOICES))
+    body_type = forms.CharField(label='What is the type of the car?', widget=forms.Select(choices=BODY_TYPE_CHOICES))
+    fuel_type = forms.CharField(widget=forms.Select(choices=FUEL_TYPE_CHOICES))
+    exterior_color = forms.CharField(widget=forms.Select(choices=EXTERIOR_COLOR_CHOICES))
+    transmission = forms.CharField(widget=forms.Select(choices=TRANSMISSION_CHOICES))
+    wheel_system = forms.CharField(widget=forms.Select(choices=WHEEL_SYSTEM_CHOICES))
+    engine_type = forms.CharField(widget=forms.Select(choices=ENGINE_TYPE_CHOICES))
+    horsepower = forms.IntegerField(required=True, initial=200, widget=forms.NumberInput(attrs={'id': 'form_horsepower', 'step': "1"}))
+    engine_displacement = forms.IntegerField(required=True, initial=3800, widget=forms.NumberInput(attrs={'id': 'form_engine_displacement', 'step': "1"}))
+    mileage = forms.IntegerField(required=True, initial=30000, widget=forms.NumberInput(attrs={'id': 'form_mileage', 'step': "1"}))
+    transmission_display = forms.IntegerField(required=True, initial=6, widget=forms.NumberInput(attrs={'id': 'form_transmission_display', 'step': "1"}))
+    year = forms.IntegerField(required=True, initial=2010, widget=forms.NumberInput(attrs={'id': 'form_year', 'step': "1"}))
+    fuel_tank_volume = forms.IntegerField(required=True, initial=30, widget=forms.NumberInput(attrs={'id': 'form_fuel_tank_volume', 'step': "1"}))
+    city_fuel_economy = forms.FloatField(required=True, initial=20, widget=forms.NumberInput(attrs={'id': 'form_city_fuel_economy', 'step': "0.1"}))
+    highway_fuel_economy = forms.FloatField(required=True, initial=20, widget=forms.NumberInput(attrs={'id': 'form_highway_fuel_economy', 'step': "0.1"}))
+    maximum_seating = forms.IntegerField(required=True, initial=5, widget=forms.NumberInput(attrs={'id': 'form_maximum_seating', 'step': "1"}))
+
 
     def clean(self):
         cleaned_data = super(ContactForm, self).clean()
-        name = cleaned_data.get('name')
-        daysonmarket = cleaned_data.get('daysonmarket')
-        engine_displacement = cleaned_data.get('engine_displacement')
+        is_new = cleaned_data.get('is_new')
+        body_type = cleaned_data.get('body_type')
+        fuel_type = cleaned_data.get('fuel_type')
+        exterior_color = cleaned_data.get('exterior_color')
+        transmission = cleaned_data.get('transmission')
+        wheel_system = cleaned_data.get('wheel_system')
+        engine_type = cleaned_data.get('engine_type')
         horsepower = cleaned_data.get('horsepower')
-        latitude = cleaned_data.get('latitude')
-        listing_id = cleaned_data.get('listing_id')
-        longitude = cleaned_data.get('longitude')
+        engine_displacement = cleaned_data.get('engine_displacement')
         mileage = cleaned_data.get('mileage')
-        savings_amount = cleaned_data.get('savings_amount')
-        seller_rating = cleaned_data.get('seller_rating')
-        sp_id = cleaned_data.get('sp_id')
-        year = cleaned_data.get('year')
-        if (not name and not daysonmarket and not engine_displacement and not horsepower and not latitude and 
-            not listing_id and not longitude and not mileage and not savings_amount and not seller_rating and 
-            not sp_id and not year):
+        transmission_display = cleaned_data.get('transmission_display')
+        year = cleaned_data.get('year')   
+        fuel_tank_volume = cleaned_data.get('fuel_tank_volume')
+        city_fuel_economy = cleaned_data.get('city_fuel_economy')
+        highway_fuel_economy = cleaned_data.get('highway_fuel_economy')
+        maximum_seating = cleaned_data.get('maximum_seating')
+        if (not your_name and not horsepower and not engine_displacement and not mileage and not transmission_display and 
+            not year and not fuel_tank_volume and not city_fuel_economy and not highway_fuel_economy and not maximum_seating
+            and not is_new and not body_type and not fuel_type and not exterior_color and not transmission and not wheel_system
+            and not engine_type):
             raise forms.ValidationError('Some fields have errors!')
+
+
