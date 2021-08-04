@@ -1,3 +1,4 @@
+
 from django.urls import path
 from . import views
 
@@ -11,5 +12,4 @@ urlpatterns = [
     path('project', views.project, name="project"),
     path('prediction', views.prediction, name="prediction"),
     path('redirect', views.model, name="redirect"),
-    path('get-model',views.getModel, name='get-model'),
 ]

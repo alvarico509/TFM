@@ -30,30 +30,6 @@
       </div>
       <div class="row">
 
-
-<script>
-          $("#id_make_name").change(function () {
-              var makeId = $(this).val();
-$.ajax({
-                type: "POST",
-                url: "{% url 'get-model' %}",
-                data: {
-                  'csrfmiddlewaretoken': '{{ csrf_token }}',
-                  'make_name': make_name
-                },
-                success: function (data) {
-                  console.log(data.model);
-                  let html_data = '<option value="-----">Select Model yo yooooo man!</option>';
-                  data.model.forEach(function (data) {
-                      html_data += `<option value="${data}">${data}</option>`
-                  });
-                  $("#id_model_name").html(html_data);
-                }
-              });
-});
-</script>
-
-
         <form method="post" action="prediction" novalidate>
               {% csrf_token %}
 
@@ -94,25 +70,6 @@ $.ajax({
                 </div>
               {% endfor %}
 
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="mb-4">
-                    <label >Select a Make</label>
-                     {{form.make_name}}
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="mb-4">
-                    <div class="form-group">
-                       <label >Select a Model</label>
-                       <select id="id_model_name" class="form-control" name="model_name">
-                         <option value="-----">Select Model</option>
-                       </select>
-                     </div>
-                  </div>
-                </div>
-              </div>
-
           <button type="submit" class="btn btn-primary">Calculate</button>
         </form>
 
@@ -127,4 +84,4 @@ $.ajax({
 
 
 
-{% endblock %}	
+{% endblock %}  
