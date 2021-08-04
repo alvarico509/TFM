@@ -38,7 +38,7 @@ def return_model_by_make(make):
     for x in all_data:
         if x['make_name'] == make:
             y = (x['model_name'], x['model_name'])
-            all_models.append(x['model_name'])
+            all_models.append(y)
 
     return all_models
 
