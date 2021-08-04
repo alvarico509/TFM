@@ -5,6 +5,12 @@ import os
 from django.conf import settings
 
 
+json_folder = settings.BASE_DIR / 'JSON'
+filepath = os.path.join(json_folder, os.path.basename("make_model_A.json"))
+
+
+
+
 def readJson(filename):
     with open(filename, 'r') as fp:
         return json.load(fp)
@@ -13,7 +19,7 @@ def get_make():
     """ GET MAKE SELECTION """
     #json_folder = settings.BASE_DIR / "JSON"
     #file_path = os.path.join(json_folder, os.path.basename("countries_states_cities"))
-    filepath = '/Users/alvarolozanoalonso/desktop/project_tfm/tfm/JSON/make_model_A.json'
+    #filepath = '/Users/alvarolozanoalonso/desktop/project_tfm/tfm/JSON/make_model_A.json'
     all_data = readJson(filepath)
     all_makes = []
 
@@ -30,7 +36,7 @@ def get_model():
     """ GET MODEL SELECTION """
     #json_folder = settings.BASE_DIR / "JSON"
     #file_path = os.path.join(json_folder, os.path.basename("countries_states_cities"))
-    filepath = '/Users/alvarolozanoalonso/desktop/project_tfm/tfm/JSON/make_model_A.json'
+    #filepath = '/Users/alvarolozanoalonso/desktop/project_tfm/tfm/JSON/make_model_A.json'
     all_data = readJson(filepath)
     all_models = []
 

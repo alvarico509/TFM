@@ -90,6 +90,7 @@ def prediction(request):
 			city_fuel_economy = form.cleaned_data.get('city_fuel_economy')
 			highway_fuel_economy = form.cleaned_data.get('highway_fuel_economy')
 			maximum_seating = form.cleaned_data.get('maximum_seating')
+			
 			car_specs = pd.DataFrame({"horsepower": horsepower, "engine_displacement": engine_displacement, "mileage": mileage, "transmission_display": transmission_display,
 	       									  "year": year, "fuel_tank_volume": fuel_tank_volume, "city_fuel_economy": city_fuel_economy, "highway_fuel_economy": highway_fuel_economy, 
 	       									  "maximum_seating": maximum_seating}, index=[0]).to_numpy().reshape(1,-1)

@@ -3,7 +3,6 @@ import os
 from django.conf import settings
 
 
-
 def readJson(filename):
     with open(filename, 'r') as fp:
         return json.load(fp)
