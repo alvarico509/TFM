@@ -4,12 +4,8 @@ import json
 import os
 from django.conf import settings
 
-
 json_folder = settings.BASE_DIR / 'JSON'
 filepath = os.path.join(json_folder, os.path.basename("make_model_A.json"))
-
-
-
 
 def readJson(filename):
     with open(filename, 'r') as fp:
@@ -31,25 +27,6 @@ def get_make():
             all_makes.append(y)
 
     return all_makes
-
-def get_model():
-    """ GET MODEL SELECTION """
-    #json_folder = settings.BASE_DIR / "JSON"
-    #file_path = os.path.join(json_folder, os.path.basename("countries_states_cities"))
-    #filepath = '/Users/alvarolozanoalonso/desktop/project_tfm/tfm/JSON/make_model_A.json'
-    all_data = readJson(filepath)
-    all_models = []
-
-    for x in all_data:
-        if (x['model_name'], x['model_name']) in all_models:
-            continue
-        else:
-            y = (x['model_name'], x['model_name'])
-            all_models.append(y)
-
-    return all_models
-
-
 
 
 IS_NEW_CHOICES = [
@@ -133,12 +110,6 @@ class VehicleForm(forms.ModelForm):
                     required = True,
                     label='Make:',
                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_make'}),
-                    )
-    model = forms.ChoiceField(
-                    choices = get_model(),
-                    required = True,
-                    label='Model:',
-                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_model'}),
                     )
     is_new = forms.ChoiceField(
                     choices = IS_NEW_CHOICES,
@@ -276,7 +247,7 @@ class VehicleForm(forms.ModelForm):
 
     class Meta:
             model = Vehicle
-            fields = ['make', 'model', 'is_new', 'body_type', 'fuel_type', 'exterior_color', 'transmission', 'wheel_system', 'engine_type',
+            fields = ['make', 'is_new', 'body_type', 'fuel_type', 'exterior_color', 'transmission', 'wheel_system', 'engine_type',
                       'horsepower', 'engine_displacement', 'mileage', 'transmission_display', 'year', 'fuel_tank_volume',
                       'city_fuel_economy', 'highway_fuel_economy', 'maximum_seating']
 
