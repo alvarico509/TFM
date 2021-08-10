@@ -133,7 +133,25 @@ def prediction(request):
 
 			predictedPrice = round(int(myModel.predict(car_specs)))
 
-			return render(request, 'prediction.html', {'predictedPrice': predictedPrice})
+			return render(request, 'prediction.html', {'predictedPrice': predictedPrice,
+													   'make': make,
+													   'model': model,
+													   'is_new': is_new,
+													   'body_type': body_type,
+													   'fuel_type': fuel_type,
+													   'exterior_color': exterior_color,
+													   'transmission': transmission,
+													   'wheel_system': wheel_system,
+													   'engine_type': engine_type,
+													   'horsepower': horsepower,
+													   'engine_displacement': engine_displacement,
+													   'mileage': mileage,
+													   'transmission_display': transmission_display,
+													   'year': year,
+													   'fuel_tank_volume': fuel_tank_volume,
+													   'city_fuel_economy': city_fuel_economy,
+													   'highway_fuel_economy': highway_fuel_economy,
+													   'maximum_seating': maximum_seating})
 
 		else:
 			return render(request, 'model.html', {'form': form})

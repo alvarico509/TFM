@@ -82,16 +82,12 @@
               {{ form.engine_type }}
             </div>
             <div class="form-group col-md-6">
-              <label>Horsepower:</label>
+              <label>Horsepower (hp):</label>
               {{ form.horsepower }}
             </div>
             <div class="form-group col-md-6">
-              <label>Engine displacement:</label>
+              <label>Engine displacement (cc):</label>
               {{ form.engine_displacement }}
-            </div>
-            <div class="form-group col-md-6">
-              <label>Mileage:</label>
-              {{ form.mileage }}
             </div>
              <div class="form-group col-md-6">
               <label>Gears:</label>
@@ -102,20 +98,24 @@
               {{ form.year }}
             </div>
             <div class="form-group col-md-6">
-              <label>Fuel tank volume:</label>
+              <label>Fuel tank volume (gal):</label>
               {{ form.fuel_tank_volume }}
             </div>
             <div class="form-group col-md-6">
-              <label>City fuel economy:</label>
+              <label>City fuel economy (km/l):</label>
               {{ form.city_fuel_economy }}
             </div>
             <div class="form-group col-md-6">
-              <label>Highway fuel economy:</label>
+              <label>Highway fuel economy (km/l):</label>
               {{ form.highway_fuel_economy }}
             </div>
             <div class="form-group col-md-6">
               <label>Seats:</label>
               {{ form.maximum_seating }}
+            </div>
+            <div class="form-group col-md-6">
+              <label>Mileage (miles):</label>
+              {{ form.mileage }}
             </div>
             <div class="form-group col-md-6">
               <button type="submit" class="btn btn-primary">Calculate</button>

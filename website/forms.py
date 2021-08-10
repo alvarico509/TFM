@@ -53,6 +53,7 @@ FUEL_TYPE_CHOICES = [
     ('Biodiesel', 'Biodiesel'),
     ('Compressed Natural Gas', 'Compressed Natural Gas'),
     ('Flex Fuel Vehicle', 'Flex Fuel Vehicle'),
+    ('Electric_Motor', 'Electric')
 ]
 
 EXTERIOR_COLOR_CHOICES = [
@@ -84,8 +85,8 @@ WHEEL_SYSTEM_CHOICES = [
     ('RWD', 'Rear Wheel Drive (RWD)'),
     ('FWD', 'Forward Wheel Drive (FWD)'),
     ('AWD', 'All Wheel Drive (AWD)'),
-    ('4WD', '4 Wheel Drive (4WD)'),
-    ('4x2', '2 Wheel Drive (4x2)'),
+    ('4WD', 'Four Wheel Drive (4WD)'),
+    ('4x2', 'Two Wheel Drive (4x2)'),
 ]
 
 ENGINE_TYPE_CHOICES = [
@@ -108,140 +109,116 @@ class VehicleForm(forms.ModelForm):
     make = forms.ChoiceField(
                     choices = get_make(),
                     required = True,
+                    initial = 'Ford',
                     label='Make:',
                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_make'}),
                     )
     is_new = forms.ChoiceField(
                     choices = IS_NEW_CHOICES,
                     required = True,
+                    initial = '0',
                     label='Status:',
                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_is_new'}),
                     )
     body_type = forms.ChoiceField(
                     choices = BODY_TYPE_CHOICES,
                     required = True,
+                    initial = 'Pickup Truck',
                     label='Body type:',
                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_body_type'}),
                     )
     fuel_type = forms.ChoiceField(
                     choices = FUEL_TYPE_CHOICES,
                     required = True,
+                    initial = 'Gasoline',
                     label='Fuel type:',
                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_fuel_type'}),
                     )
     exterior_color = forms.ChoiceField(
                     choices = EXTERIOR_COLOR_CHOICES,
                     required = True,
+                    initial = 'BLACK',
                     label='Exterior color:',
                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_exterior_color'}),
                     )
     transmission = forms.ChoiceField(
                     choices = TRANSMISSION_CHOICES,
                     required = True,
+                    initial = 'A',
                     label='Transmission:',
                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_is_new'}),
                     )
     wheel_system = forms.ChoiceField(
                     choices = WHEEL_SYSTEM_CHOICES,
                     required = True,
-                    label='Wheel system:',
+                    initial = '4WD',
+                    label = 'Wheel system:',
                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_wheel_system'}),
                     )
     engine_type = forms.ChoiceField(
                     choices = ENGINE_TYPE_CHOICES,
                     required = True,
+                    initial = 'V6',
                     label='Engine type:',
                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_engine_type'}),
                     )
-    horsepower = forms.IntegerField(
-                    required = True,
-                    label = 'Horsepower:',
-                    initial = 200,
-                    max_value = 1001,
-                    min_value = 40,
-                    widget = forms.NumberInput(attrs={'class': 'form-control', 
-                                                      'id': 'id_horsepower', 
-                                                      'step': "1"}),
+    horsepower = forms.ChoiceField(
+                    required=True,
+                    initial=365,
+                    choices=[(x, x) for x in range(55, 1002)],
+                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_horsepower'}),
                     )
-    engine_displacement = forms.IntegerField(
-                    required = True,
-                    label = 'Engine displacement:',
-                    initial = 3800,
-                    max_value = 8400,
-                    min_value = 700,
-                    widget = forms.NumberInput(attrs={'class': 'form-control', 
-                                                      'id': 'id_engine_displacement', 
-                                                      'step': "1"}),
+    engine_displacement = forms.ChoiceField(
+                    required=True,
+                    initial=3500,
+                    choices=[(x, x) for x in range(700, 8500, 100)],
+                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_engine_displacement'}),
                     )
     mileage = forms.IntegerField(
                     required = True,
                     label = 'Mileage:',
-                    initial = 30000,
+                    initial = 66211,
                     max_value = 1000000,
                     min_value = 0,
                     widget = forms.NumberInput(attrs={'class': 'form-control', 
                                                       'id': 'id_mileage', 
                                                       'step': "1"}),
                     )
-    transmission_display = forms.IntegerField(
-                    required = True,
-                    label = 'Gears:',
-                    initial = 6,
-                    max_value = 20,
-                    min_value = 1,
-                    widget = forms.NumberInput(attrs={'class': 'form-control', 
-                                                      'id': 'id_transmission_display', 
-                                                      'step': "1"}),
+    transmission_display = forms.ChoiceField(
+                    required=True,
+                    initial=6,
+                    choices=[(x, x) for x in range(1, 11)],
+                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_transmission_display'}),
                     )
-    year = forms.IntegerField(
-                    required = True,
-                    label = 'Year of the car:',
-                    initial = 2010,
-                    max_value = 2030,
-                    min_value = 1900,
-                    widget = forms.NumberInput(attrs={'class': 'form-control', 
-                                                      'id': 'id_year', 
-                                                      'step': "1"}),
+    year = forms.ChoiceField(
+                    required=True,
+                    initial=2015,
+                    choices=[(x, x) for x in range(1915, 2022)],
+                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_year'}),
                     )
-    fuel_tank_volume = forms.FloatField(
-                    required = True,
-                    label = 'Fuel tank volume:',
-                    initial = 10,
-                    max_value = 50,
-                    min_value = 0,
-                    widget = forms.NumberInput(attrs={'class': 'form-control', 
-                                                      'id': 'id_fuel_tank_volume', 
-                                                      'step': "0.1"}),
+    fuel_tank_volume = forms.ChoiceField(
+                    required=True,
+                    initial=36,
+                    choices=[(x, x) for x in range(1, 65)],
+                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_fuel_tank_volume'}),
                     )
-    city_fuel_economy = forms.FloatField(
-                    required = True,
-                    label = 'City fuel economy:',
-                    initial = 10,
-                    max_value = 50,
-                    min_value = 0,
-                    widget = forms.NumberInput(attrs={'class': 'form-control', 
-                                                      'id': 'id_city_fuel_economy', 
-                                                      'step': "0.1"}),
+    city_fuel_economy = forms.ChoiceField(
+                    required=True,
+                    initial=17,
+                    choices=[(x, x) for x in range(7, 128)],
+                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_city_fuel_economy'}),
                     )
-    highway_fuel_economy = forms.FloatField(
-                    required = True,
-                    label = 'Highway fuel economy:',
-                    initial = 15,
-                    max_value = 50,
-                    min_value = 0,
-                    widget = forms.NumberInput(attrs={'class': 'form-control', 
-                                                      'id': 'id_highway_fuel_economy', 
-                                                      'step': "0.1"}),
+    highway_fuel_economy = forms.ChoiceField(
+                    required=True,
+                    initial=23,
+                    choices=[(x, x) for x in range(10, 128)],
+                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_highway_fuel_economy'}),
                     )
-    maximum_seating = forms.IntegerField(
-                    required = True,
-                    label = 'Seats:',
-                    initial = 5,
-                    max_value = 15,
-                    min_value = 1,
-                    widget = forms.NumberInput(attrs={'class': 'form-control', 
-                                                      'id': 'id_maximum_seating', 
-                                                      'step': "1"}),
+    maximum_seating = forms.ChoiceField(
+                    required=True,
+                    initial=5,
+                    choices=[(x, x) for x in range(2, 16)],
+                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_maximum_seating'}),
                     )
 
 
