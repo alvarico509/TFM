@@ -18,12 +18,10 @@ import pandas as pd
 import numpy as np
 import os
 
-
-
-
 def readJson(filename):
     with open(filename, 'r') as fp:
         return json.load(fp)
+
 
 # Create your views here.
 def home(request):
@@ -86,8 +84,6 @@ def getModel(request):
     models = return_model_by_make(make)
     return JsonResponse({'models': models})
 
-
-
 json_folder = settings.BASE_DIR / 'JSON'
 filepath = os.path.join(json_folder, os.path.basename("make_model_A.json"))
 
@@ -108,8 +104,8 @@ def prediction(request):
 	if request.method == 'POST':
 		form = VehicleForm(request.POST)
 		if form.is_valid():
+			model = request.POST['model']
 			make = form.cleaned_data.get('make')
-			model = form.cleaned_data.get('model')
 			is_new = form.cleaned_data.get('is_new')
 			body_type = form.cleaned_data.get('body_type')
 			fuel_type = form.cleaned_data.get('fuel_type')
@@ -170,8 +166,9 @@ def prediction(request):
 													   'highway_fuel_economy': highway_fuel_economy,
 													   'maximum_seating': maximum_seating})
 
-		else:
-			return render(request, 'model.html', {'form': form})
+		#else:
+			#return render(request, 'model.html', {'form': form})
+
 
 
 col_names = ['city_fuel_economy',

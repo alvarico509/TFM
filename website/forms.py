@@ -4,6 +4,7 @@ import json
 import os
 from django.conf import settings
 
+
 json_folder = settings.BASE_DIR / 'JSON'
 filepath = os.path.join(json_folder, os.path.basename("make_model_A.json"))
 
@@ -50,7 +51,6 @@ FUEL_TYPE_CHOICES = [
     ('Biodiesel', 'Biodiesel'),
     ('Compressed Natural Gas', 'Compressed Natural Gas'),
     ('Flex Fuel Vehicle', 'Flex Fuel Vehicle'),
-    ('Electric_Motor', 'Electric')
 ]
 
 EXTERIOR_COLOR_CHOICES = [
@@ -82,8 +82,8 @@ WHEEL_SYSTEM_CHOICES = [
     ('RWD', 'Rear Wheel Drive (RWD)'),
     ('FWD', 'Forward Wheel Drive (FWD)'),
     ('AWD', 'All Wheel Drive (AWD)'),
-    ('4WD', 'Four Wheel Drive (4WD)'),
-    ('4x2', 'Two Wheel Drive (4x2)'),
+    ('4WD', '4 Wheel Drive (4WD)'),
+    ('4x2', '2 Wheel Drive (4x2)'),
 ]
 
 ENGINE_TYPE_CHOICES = [
@@ -106,13 +106,8 @@ class VehicleForm(forms.ModelForm):
     make = forms.ChoiceField(
                     choices = get_make(),
                     required = True,
-                    initial = 'Ford',
                     label='Make:',
                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_make'}),
-                    )
-    model = forms.ChoiceField(
-                    required=True, 
-                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_model'})
                     )
     is_new = forms.ChoiceField(
                     choices = IS_NEW_CHOICES,
@@ -225,7 +220,6 @@ class VehicleForm(forms.ModelForm):
 
     class Meta:
             model = Vehicle
-            fields = ['make', 'model', 'is_new', 'body_type', 'fuel_type', 'exterior_color', 'transmission', 'wheel_system', 'engine_type',
+            fields = ['make', 'is_new', 'body_type', 'fuel_type', 'exterior_color', 'transmission', 'wheel_system', 'engine_type',
                       'horsepower', 'engine_displacement', 'mileage', 'transmission_display', 'year', 'fuel_tank_volume',
                       'city_fuel_economy', 'highway_fuel_economy', 'maximum_seating']
-
