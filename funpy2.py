@@ -9,8 +9,6 @@ def readJson(filename):
 
 def get_make():
     """ GET MAKE SELECTION """
-    #json_folder = settings.BASE_DIR / "JSON"
-    #file_path = os.path.join(json_folder, os.path.basename("countries_states_cities"))
     filepath = '/Users/alvarolozanoalonso/desktop/project_tfm/tfm/JSON/make_model_A.json'
     all_data = readJson(filepath)
     all_makes = [('-----', '---Select a Make---')]
@@ -27,8 +25,6 @@ def get_make():
 
 def return_model_by_make(make):
     """ GET MODEL SELECTION BY MAKE INPUT """
-    #json_folder = settings.BASE_DIR / "JSON"
-    #file_path = os.path.join(json_folder, os.path.basename("countries_states_cities"))
     filepath = '/Users/alvarolozanoalonso/desktop/project_tfm/tfm/JSON/make_model_A.json'
     all_data = readJson(filepath)
 
@@ -40,3 +36,23 @@ def return_model_by_make(make):
             all_models.append(x['model_name'])
 
     return all_models
+
+
+def return_body_type(make, model):
+    """ GET MODEL SELECTION BY MAKE INPUT """
+    filepath = '/Users/alvarolozanoalonso/desktop/project_tfm/tfm/JSON/web_dic.json'
+    all_data = readJson(filepath)
+
+    all_bodies = []
+
+    for x in all_data:
+        if (x['make_name'] == make) and x['model_name'] == model:
+            if x['body_type'] not in all_bodies:
+                all_bodies.append(x['body_type'])
+
+    return all_bodies
+
+a = return_body_type('Audi', 'A6')
+print(a)
+
+get_make()

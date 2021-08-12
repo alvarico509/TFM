@@ -84,6 +84,12 @@ def getModel(request):
     models = return_model_by_make(make)
     return JsonResponse({'models': models})
 
+def getBodyType(request):
+    make = request.POST.get('make')
+    model = request.POST.get('model')
+    body_types = return_body_type(make, model)
+    return JsonResponse({'body_types': body_types})
+
 json_folder = settings.BASE_DIR / 'JSON'
 filepath = os.path.join(json_folder, os.path.basename("make_model_A.json"))
 
@@ -94,10 +100,28 @@ def return_model_by_make(make):
 
     for x in all_data:
         if x['make_name'] == make:
-            y = (x['model_name'], x['model_name'])
-            all_models.append(x['model_name'])
+        	if x['model_name'] not in all_models:
+        		all_models.append(x['model_name'])
 
     return all_models
+
+
+
+filepath_2 = os.path.join(json_folder, os.path.basename("web_dic.json"))
+
+def return_body_type(make, model):
+    """ GET BODY_TYPE SELECTION BY MAKE AND MODEL INPUT """
+    all_data = readJson(filepath_2)
+
+    all_bodies = []
+
+    for x in all_data:
+        if (x['make_name'] == make) and (x['model_name'] == model):
+            if x['body_type'] not in all_bodies:
+                all_bodies.append(x['body_type'])
+
+    return all_bodies
+
 
 def prediction(request):
 	dic = {}
@@ -105,9 +129,10 @@ def prediction(request):
 		form = VehicleForm(request.POST)
 		if form.is_valid():
 			model = request.POST['model']
+			body_type = request.POST['body_type']
+
 			make = form.cleaned_data.get('make')
 			is_new = form.cleaned_data.get('is_new')
-			body_type = form.cleaned_data.get('body_type')
 			fuel_type = form.cleaned_data.get('fuel_type')
 			exterior_color = form.cleaned_data.get('exterior_color')
 			transmission = form.cleaned_data.get('transmission')

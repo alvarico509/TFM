@@ -32,18 +32,6 @@ IS_NEW_CHOICES = [
     ('0', 'Used'),
     ]
 
-BODY_TYPE_CHOICES = [
-    ('Convertible', 'Convertible'),
-    ('Coupe', 'Coupe'),
-    ('Hatchback', 'Hatchback'),
-    ('Minivan', 'Minivan'),
-    ('Pickup Truck', 'Pickup Truck'),
-    ('SUV / Crossover', 'SUV / Crossover'),
-    ('Sedan', 'Sedan'),
-    ('Van', 'Van'),
-    ('Wagon', 'Wagon'),
-]
-
 FUEL_TYPE_CHOICES = [
     ('Gasoline', 'Gasoline'),
     ('Diesel', 'Diesel'),
@@ -117,13 +105,6 @@ class VehicleForm(forms.ModelForm):
                     initial = '0',
                     label='Status:',
                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_is_new'}),
-                    )
-    body_type = forms.ChoiceField(
-                    choices = BODY_TYPE_CHOICES,
-                    required = True,
-                    initial = 'Pickup Truck',
-                    label='Body type:',
-                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_body_type'}),
                     )
     fuel_type = forms.ChoiceField(
                     choices = FUEL_TYPE_CHOICES,
@@ -222,6 +203,6 @@ class VehicleForm(forms.ModelForm):
 
     class Meta:
             model = Vehicle
-            fields = ['make', 'is_new', 'body_type', 'fuel_type', 'exterior_color', 'transmission', 'wheel_system', 'engine_type',
+            fields = ['make', 'is_new', 'fuel_type', 'exterior_color', 'transmission', 'wheel_system', 'engine_type',
                       'horsepower', 'engine_displacement', 'mileage', 'transmission_display', 'year', 'fuel_tank_volume',
                       'city_fuel_economy', 'highway_fuel_economy', 'maximum_seating']

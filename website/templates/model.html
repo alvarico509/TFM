@@ -44,46 +44,29 @@
           </div>
           {% endfor %}
           <div class="form-row">
-
             <div class="form-group col-md-6">
-              <label>Status:</label>
+              <label>Make:</label>
                 {{ form.make }}
             </div>
-
             <div class="form-group col-md-6">
-              <label >Model:</label>
+              <label>Model:</label>
               <select id="id_model" class="form-control" name="model">
                 <option value="-----">Select Model</option>
               </select>
             </div>
-
-            <div class="form-group col-md-6">
-              <label>Status:</label>
-              {{ form.is_new }}
-            </div>
             <div class="form-group col-md-6">
               <label>Body type:</label>
-              {{ form.body_type }}
+              <select id="id_body_type" class="form-control" name="body_type">
+                <option value="-----">Select Body Type</option>
+              </select>
             </div>
             <div class="form-group col-md-6">
               <label>Fuel type:</label>
               {{ form.fuel_type }}
             </div>
             <div class="form-group col-md-6">
-              <label>Color:</label>
-              {{ form.exterior_color }}
-            </div>
-            <div class="form-group col-md-6">
               <label>Transmission:</label>
               {{ form.transmission }}
-            </div>
-            <div class="form-group col-md-6">
-              <label>Wheel system:</label>
-              {{ form.wheel_system }}
-            </div>
-            <div class="form-group col-md-6">
-              <label>Engine:</label>
-              {{ form.engine_type }}
             </div>
             <div class="form-group col-md-6">
               <label>Horsepower (hp):</label>
@@ -93,7 +76,15 @@
               <label>Engine displacement (cc):</label>
               {{ form.engine_displacement }}
             </div>
-             <div class="form-group col-md-6">
+            <div class="form-group col-md-6">
+              <label>Engine:</label>
+              {{ form.engine_type }}
+            </div>
+            <div class="form-group col-md-6">
+              <label>Wheel system:</label>
+              {{ form.wheel_system }}
+            </div>
+            <div class="form-group col-md-6">
               <label>Gears:</label>
               {{ form.transmission_display }}
             </div>
@@ -114,8 +105,16 @@
               {{ form.highway_fuel_economy }}
             </div>
             <div class="form-group col-md-6">
+              <label>Color:</label>
+              {{ form.exterior_color }}
+            </div>
+            <div class="form-group col-md-6">
               <label>Seats:</label>
               {{ form.maximum_seating }}
+            </div>
+            <div class="form-group col-md-6">
+              <label>Status:</label>
+              {{ form.is_new }}
             </div>
             <div class="form-group col-md-6">
               <label>Mileage (miles):</label>
@@ -147,7 +146,32 @@ $(document).on('change', "#id_make", function () {
         }
       });
   });
-</script>      
+</script> 
+
+<script type="text/javascript">
+$(document).on('change', "#id_model", function () {
+      var model = $(this).val();
+      var make = $("#id_make").val();
+      $.ajax({
+        type: "POST",
+        url: "{% url 'getBodyType' %}",
+        data: {
+          'csrfmiddlewaretoken': '{{ csrf_token }}',
+          'model': model,
+          'make': make,
+        },
+        success: function (data) {
+          console.log(data.body_types);
+          let html_data = '<option value="">Select Body Type</option>';
+          data.body_types.forEach(function (data) {
+              html_data += `<option value="${data}">${data}</option>`
+          });
+          $("#id_body_type").html(html_data);
+        }
+      });
+  });
+</script>
+    
 
 
 
