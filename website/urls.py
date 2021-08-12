@@ -12,4 +12,7 @@ urlpatterns = [
     path('redirect', views.model, name="redirect"),
     path('get-model',views.getModel, name='get-model'),
     path('getBodyType', views.getBodyType, name='getBodyType'),
+    path('getFuelType', views.getFuelType, name='getFuelType'),
+    path('getTransmission', views.getTransmission, name='getTransmission'),
+    path('getHorsepower', views.getHorsepower, name='getHorsepower'),
 ]

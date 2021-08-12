@@ -32,16 +32,6 @@ IS_NEW_CHOICES = [
     ('0', 'Used'),
     ]
 
-FUEL_TYPE_CHOICES = [
-    ('Gasoline', 'Gasoline'),
-    ('Diesel', 'Diesel'),
-    ('Hybrid', 'Hybrid'),
-    ('Biodiesel', 'Biodiesel'),
-    ('Compressed Natural Gas', 'Compressed Natural Gas'),
-    ('Flex Fuel Vehicle', 'Flex Fuel Vehicle'),
-    ('Electric_Motor', 'Electric')
-]
-
 EXTERIOR_COLOR_CHOICES = [
     ('BLACK', 'Black'),
     ('BLUE', 'Blue'),
@@ -58,13 +48,6 @@ EXTERIOR_COLOR_CHOICES = [
     ('UNKNOWN', 'Other'),
     ('WHITE', 'White'),
     ('YELLOW', 'Yellow'),
-]
-
-TRANSMISSION_CHOICES = [
-    ('A', 'Automatic (A)'),
-    ('M', 'Manual (M)'),
-    ('Dual Clutch', 'Dual Clutch Transmission (DCT)'),
-    ('CVT', 'Continuously Variable Transmission (CVT)'),
 ]
 
 WHEEL_SYSTEM_CHOICES = [
@@ -106,26 +89,12 @@ class VehicleForm(forms.ModelForm):
                     label='Status:',
                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_is_new'}),
                     )
-    fuel_type = forms.ChoiceField(
-                    choices = FUEL_TYPE_CHOICES,
-                    required = True,
-                    initial = 'Gasoline',
-                    label='Fuel type:',
-                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_fuel_type'}),
-                    )
     exterior_color = forms.ChoiceField(
                     choices = EXTERIOR_COLOR_CHOICES,
                     required = True,
                     initial = 'BLACK',
                     label='Exterior color:',
                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_exterior_color'}),
-                    )
-    transmission = forms.ChoiceField(
-                    choices = TRANSMISSION_CHOICES,
-                    required = True,
-                    initial = 'A',
-                    label='Transmission:',
-                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_is_new'}),
                     )
     wheel_system = forms.ChoiceField(
                     choices = WHEEL_SYSTEM_CHOICES,
@@ -140,12 +109,6 @@ class VehicleForm(forms.ModelForm):
                     initial = 'V6',
                     label='Engine type:',
                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_engine_type'}),
-                    )
-    horsepower = forms.ChoiceField(
-                    required=True,
-                    initial=365,
-                    choices=[(x, x) for x in range(55, 1002)],
-                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_horsepower'}),
                     )
     engine_displacement = forms.ChoiceField(
                     required=True,
@@ -203,6 +166,6 @@ class VehicleForm(forms.ModelForm):
 
     class Meta:
             model = Vehicle
-            fields = ['make', 'is_new', 'fuel_type', 'exterior_color', 'transmission', 'wheel_system', 'engine_type',
-                      'horsepower', 'engine_displacement', 'mileage', 'transmission_display', 'year', 'fuel_tank_volume',
+            fields = ['make', 'is_new', 'exterior_color', 'wheel_system', 'engine_type', 
+                      'engine_displacement', 'mileage', 'transmission_display', 'year', 'fuel_tank_volume',
                       'city_fuel_economy', 'highway_fuel_economy', 'maximum_seating']

@@ -90,6 +90,32 @@ def getBodyType(request):
     body_types = return_body_type(make, model)
     return JsonResponse({'body_types': body_types})
 
+def getFuelType(request):
+    make = request.POST.get('make')
+    model = request.POST.get('model')
+    body = request.POST.get('body')
+    fuel_types = return_fuel_type(make, model, body)
+    return JsonResponse({'fuel_types': fuel_types})
+
+def getTransmission(request):
+    make = request.POST.get('make')
+    model = request.POST.get('model')
+    body = request.POST.get('body')
+    fuel = request.POST.get('fuel')
+    transmissions = return_transmission(make, model, body, fuel)
+    return JsonResponse({'transmissions': transmissions})
+
+def getHorsepower(request):
+    make = request.POST.get('make')
+    model = request.POST.get('model')
+    body = request.POST.get('body')
+    fuel = request.POST.get('fuel')
+    transmission = request.POST.get('transmission')
+    horsepowers = return_horsepower(make, model, body, fuel, transmission)
+    return JsonResponse({'horsepowers': horsepowers})
+
+
+
 json_folder = settings.BASE_DIR / 'JSON'
 filepath = os.path.join(json_folder, os.path.basename("make_model_A.json"))
 
@@ -122,6 +148,41 @@ def return_body_type(make, model):
 
     return all_bodies
 
+def return_fuel_type(make, model, body):
+    all_data = readJson(filepath_2)
+
+    all_fuels = []
+
+    for x in all_data:
+        if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body):
+            if x['fuel_type'] not in all_fuels:
+                all_fuels.append(x['fuel_type'])
+
+    return all_fuels
+
+def return_transmission(make, model, body, fuel):
+    all_data = readJson(filepath_2)
+
+    all_transmissions = []
+
+    for x in all_data:
+        if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel):
+            if x['transmission'] not in all_transmissions:
+                all_transmissions.append(x['transmission'])
+
+    return all_transmissions
+
+def return_horsepower(make, model, body, fuel, transmission):
+    all_data = readJson(filepath_2)
+
+    all_horsepowers = []
+
+    for x in all_data:
+        if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission):
+            if x['horsepower'] not in all_horsepowers:
+                all_horsepowers.append(x['horsepower'])
+
+    return all_horsepowers
 
 def prediction(request):
 	dic = {}
@@ -130,15 +191,15 @@ def prediction(request):
 		if form.is_valid():
 			model = request.POST['model']
 			body_type = request.POST['body_type']
+			fuel_type = request.POST['fuel_type']
+			transmission = request.POST['transmission']
+			horsepower = request.POST['horsepower']
 
 			make = form.cleaned_data.get('make')
 			is_new = form.cleaned_data.get('is_new')
-			fuel_type = form.cleaned_data.get('fuel_type')
 			exterior_color = form.cleaned_data.get('exterior_color')
-			transmission = form.cleaned_data.get('transmission')
 			wheel_system = form.cleaned_data.get('wheel_system')
 			engine_type = form.cleaned_data.get('engine_type')
-			horsepower = form.cleaned_data.get('horsepower')
 			engine_displacement = form.cleaned_data.get('engine_displacement')
 			mileage = form.cleaned_data.get('mileage')
 			transmission_display = form.cleaned_data.get('transmission_display')
