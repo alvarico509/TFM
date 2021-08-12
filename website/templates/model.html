@@ -139,7 +139,7 @@ $(document).on('change', "#id_make", function () {
         },
         success: function (data) {
           console.log(data.models);
-          let html_data = '<option value="">-------</option>';
+          let html_data = '<option value="">Select Model</option>';
           data.models.forEach(function (data) {
               html_data += `<option value="${data}">${data}</option>`
           });

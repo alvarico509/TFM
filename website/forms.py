@@ -51,6 +51,7 @@ FUEL_TYPE_CHOICES = [
     ('Biodiesel', 'Biodiesel'),
     ('Compressed Natural Gas', 'Compressed Natural Gas'),
     ('Flex Fuel Vehicle', 'Flex Fuel Vehicle'),
+    ('Electric_Motor', 'Electric')
 ]
 
 EXTERIOR_COLOR_CHOICES = [
@@ -82,8 +83,8 @@ WHEEL_SYSTEM_CHOICES = [
     ('RWD', 'Rear Wheel Drive (RWD)'),
     ('FWD', 'Forward Wheel Drive (FWD)'),
     ('AWD', 'All Wheel Drive (AWD)'),
-    ('4WD', '4 Wheel Drive (4WD)'),
-    ('4x2', '2 Wheel Drive (4x2)'),
+    ('4WD', 'Four Wheel Drive (4WD)'),
+    ('4x2', 'Two Wheel Drive (4x2)'),
 ]
 
 ENGINE_TYPE_CHOICES = [
@@ -106,6 +107,7 @@ class VehicleForm(forms.ModelForm):
     make = forms.ChoiceField(
                     choices = get_make(),
                     required = True,
+                    initial = 'Ford',
                     label='Make:',
                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_make'}),
                     )
