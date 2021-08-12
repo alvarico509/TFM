@@ -13,9 +13,6 @@ def readJson(filename):
 
 def get_make():
     """ GET MAKE SELECTION """
-    #json_folder = settings.BASE_DIR / "JSON"
-    #file_path = os.path.join(json_folder, os.path.basename("countries_states_cities"))
-    #filepath = '/Users/alvarolozanoalonso/desktop/project_tfm/tfm/JSON/make_model_A.json'
     all_data = readJson(filepath)
     all_makes = []
 
@@ -112,6 +109,10 @@ class VehicleForm(forms.ModelForm):
                     initial = 'Ford',
                     label='Make:',
                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_make'}),
+                    )
+    model = forms.ChoiceField(
+                    required=True, 
+                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_model'})
                     )
     is_new = forms.ChoiceField(
                     choices = IS_NEW_CHOICES,
@@ -224,7 +225,7 @@ class VehicleForm(forms.ModelForm):
 
     class Meta:
             model = Vehicle
-            fields = ['make', 'is_new', 'body_type', 'fuel_type', 'exterior_color', 'transmission', 'wheel_system', 'engine_type',
+            fields = ['make', 'model', 'is_new', 'body_type', 'fuel_type', 'exterior_color', 'transmission', 'wheel_system', 'engine_type',
                       'horsepower', 'engine_displacement', 'mileage', 'transmission_display', 'year', 'fuel_tank_volume',
                       'city_fuel_economy', 'highway_fuel_economy', 'maximum_seating']
 

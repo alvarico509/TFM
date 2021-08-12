@@ -18,6 +18,9 @@ import pandas as pd
 import numpy as np
 import os
 
+
+
+
 def readJson(filename):
     with open(filename, 'r') as fp:
         return json.load(fp)
@@ -58,9 +61,6 @@ file_path = os.path.join(models_folder, os.path.basename("pickle"))
 myModel = pickle.load(open(file_path, "rb+"))
 
 
-def signifikant(request):
-	return render(request, 'signifikant.html', {})
-
 def team(request):
 	return render(request, 'team.html', {})
 
@@ -85,6 +85,23 @@ def getModel(request):
     make = request.POST.get('make')
     models = return_model_by_make(make)
     return JsonResponse({'models': models})
+
+
+
+json_folder = settings.BASE_DIR / 'JSON'
+filepath = os.path.join(json_folder, os.path.basename("make_model_A.json"))
+
+def return_model_by_make(make):
+    all_data = readJson(filepath)
+
+    all_models = []
+
+    for x in all_data:
+        if x['make_name'] == make:
+            y = (x['model_name'], x['model_name'])
+            all_models.append(x['model_name'])
+
+    return all_models
 
 def prediction(request):
 	dic = {}
