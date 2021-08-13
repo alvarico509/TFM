@@ -1,11 +1,9 @@
 from django.shortcuts import render
 from django.core.mail import send_mail
-from .forms import VehicleForm
 from django.http import HttpResponse
 from django.http import JsonResponse
-import json
-import os
 from django.conf import settings
+from .forms import VehicleForm
 
 from sklearn.linear_model import SGDRegressor
 from sklearn.metrics import mean_squared_error
@@ -14,16 +12,24 @@ from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import scale
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
+
 import pandas as pd
 import numpy as np
+import pickle
+import json
 import os
+
+models_folder = settings.BASE_DIR / 'models_folder'
+file_path = os.path.join(models_folder, os.path.basename("pickle"))
+myModel = pickle.load(open(file_path, "rb+"))
+
+json_folder = settings.BASE_DIR / 'JSON'
+filepath_2 = os.path.join(json_folder, os.path.basename("web_dic.json"))
 
 def readJson(filename):
 	with open(filename, 'r') as fp:
 		return json.load(fp)
 
-
-# Create your views here.
 def home(request):
 	return render(request, 'home.html', {})
 
@@ -48,16 +54,6 @@ def contact(request):
 
 	else:
 		return render(request, 'contact.html', {})
-
-
-
-import pickle
-from django.conf import settings
-
-models_folder = settings.BASE_DIR / 'models_folder'
-file_path = os.path.join(models_folder, os.path.basename("pickle"))
-myModel = pickle.load(open(file_path, "rb+"))
-
 
 def team(request):
 	return render(request, 'team.html', {})
@@ -243,184 +239,135 @@ def getSeats(request):
 	seats = return_seats(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system, transmission_display)
 	return JsonResponse({'seats': seats})
 
-
-json_folder = settings.BASE_DIR / 'JSON'
-filepath_2 = os.path.join(json_folder, os.path.basename("web_dic.json"))
-
 def return_model_by_make(make):
 	all_data = readJson(filepath_2)
-
 	all_models = []
-
 	for x in all_data:
 		if x['make_name'] == make:
 			if x['model_name'] not in all_models:
 				all_models.append(x['model_name'])
-
 	return all_models
 
 def return_body_type(make, model):
-	""" GET BODY_TYPE SELECTION BY MAKE AND MODEL INPUT """
 	all_data = readJson(filepath_2)
-
 	all_bodies = []
-
 	for x in all_data:
 		if (x['make_name'] == make) and (x['model_name'] == model):
 			if x['body_type'] not in all_bodies:
 				all_bodies.append(x['body_type'])
-
 	return all_bodies
 
 def return_fuel_type(make, model, body):
 	all_data = readJson(filepath_2)
-
 	all_fuels = []
-
 	for x in all_data:
 		if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body):
 			if x['fuel_type'] not in all_fuels:
 				all_fuels.append(x['fuel_type'])
-
 	return all_fuels
 
 def return_transmission(make, model, body, fuel):
 	all_data = readJson(filepath_2)
-
 	all_transmissions = []
-
 	for x in all_data:
 		if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel):
 			if x['transmission'] not in all_transmissions:
 				all_transmissions.append(x['transmission'])
-
 	return all_transmissions
 
 def return_horsepower(make, model, body, fuel, transmission):
 	all_data = readJson(filepath_2)
-
 	all_horsepowers = []
-
 	for x in all_data:
 		if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission):
 			if x['horsepower'] not in all_horsepowers:
 				all_horsepowers.append(x['horsepower'])
-
 	return all_horsepowers
 
 def return_engine_displacement(make, model, body, fuel, transmission, horsepower):
 	all_data = readJson(filepath_2)
-
 	all_displacements = []
-
 	for x in all_data:
 		if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission) and (x['horsepower'] == int(horsepower)):
 			if x['engine_displacement'] not in all_displacements:
 				all_displacements.append(x['engine_displacement'])
-
 	return all_displacements
 
 def return_engine_type(make, model, body, fuel, transmission, horsepower, displacement):
 	all_data = readJson(filepath_2)
-
 	all_engines = []
-
 	for x in all_data:
 		if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission) and (x['horsepower'] == int(horsepower)) and (x['engine_displacement'] == int(displacement)):
 			if x['engine_type'] not in all_engines:
 				all_engines.append(x['engine_type'])
-
 	return all_engines
 
 def return_wheel_system(make, model, body, fuel, transmission, horsepower, displacement, engine_type):
 	all_data = readJson(filepath_2)
-
 	all_wheels = []
-
 	for x in all_data:
 		if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission) and (x['horsepower'] == int(horsepower)) and (x['engine_displacement'] == int(displacement)) and (x['engine_type'] == engine_type):
 			if x['wheel_system'] not in all_wheels:
 				all_wheels.append(x['wheel_system'])
-
 	return all_wheels
 
 def return_gear(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system):
 	all_data = readJson(filepath_2)
-
 	all_gears = []
-
 	for x in all_data:
 		if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission) and (x['horsepower'] == int(horsepower)) and (x['engine_displacement'] == int(displacement)) and (x['engine_type'] == engine_type) and (x['wheel_system'] == wheel_system):
 			if x['transmission_display'] not in all_gears:
 				all_gears.append(x['transmission_display'])
-
 	return all_gears
 
 def return_year(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system, transmission_display):
 	all_data = readJson(filepath_2)
-
 	all_years = []
-
 	for x in all_data:
 		if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission) and (x['horsepower'] == int(horsepower)) and (x['engine_displacement'] == int(displacement)) and (x['engine_type'] == engine_type) and (x['wheel_system'] == wheel_system) and (x['transmission_display'] == int(transmission_display)):
 			if x['year'] not in all_years:
 				all_years.append(x['year'])
-
 	all_years = list(map(int, all_years))
 	max_year = max(all_years) + 1
 	min_year = min(all_years)
 	all_years = [x for x in range(min_year, max_year)]
-
 	return all_years
 
 def return_fuel_tank_volume(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system, transmission_display):
 	all_data = readJson(filepath_2)
-
 	all_tanks = []
-
 	for x in all_data:
 		if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission) and (x['horsepower'] == int(horsepower)) and (x['engine_displacement'] == int(displacement)) and (x['engine_type'] == engine_type) and (x['wheel_system'] == wheel_system) and (x['transmission_display'] == int(transmission_display)):
 			if x['fuel_tank_volume'] not in all_tanks:
 				all_tanks.append(x['fuel_tank_volume'])
-
 	return all_tanks
 
 def return_city_fuel_economy(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system, transmission_display):
 	all_data = readJson(filepath_2)
-
 	all_cities = []
-
 	for x in all_data:
 		if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission) and (x['horsepower'] == int(horsepower)) and (x['engine_displacement'] == int(displacement)) and (x['engine_type'] == engine_type) and (x['wheel_system'] == wheel_system) and (x['transmission_display'] == int(transmission_display)):
 			if x['city_fuel_economy'] not in all_cities:
 				all_cities.append(x['city_fuel_economy'])
-
 	return all_cities
 
 def return_highway_fuel_economy(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system, transmission_display):
 	all_data = readJson(filepath_2)
-
 	all_highways = []
-
 	for x in all_data:
 		if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission) and (x['horsepower'] == int(horsepower)) and (x['engine_displacement'] == int(displacement)) and (x['engine_type'] == engine_type) and (x['wheel_system'] == wheel_system) and (x['transmission_display'] == int(transmission_display)):
 			if x['highway_fuel_economy'] not in all_highways:
 				all_highways.append(x['highway_fuel_economy'])
-
 	return all_highways
 
 def return_seats(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system, transmission_display):
 	all_data = readJson(filepath_2)
-
 	all_seats = []
-
 	for x in all_data:
 		if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission) and (x['horsepower'] == int(horsepower)) and (x['engine_displacement'] == int(displacement)) and (x['engine_type'] == engine_type) and (x['wheel_system'] == wheel_system) and (x['transmission_display'] == int(transmission_display)):
 			if x['maximum_seating'] not in all_seats:
 				all_seats.append(x['maximum_seating'])
-
 	return all_seats
-
 
 def prediction(request):
 	dic = {}
@@ -445,9 +392,9 @@ def prediction(request):
 			is_new = form.cleaned_data.get('is_new')
 			exterior_color = form.cleaned_data.get('exterior_color')
 			mileage = form.cleaned_data.get('mileage')
-
 			myList = [make, model, body_type, fuel_type, transmission, horsepower, engine_displacement, engine_type, wheel_system, transmission_display,
 					  year, fuel_tank_volume, city_fuel_economy, highway_fuel_economy, maximum_seating]
+
 			if ("Empty" in myList) or ("" in myList):
 				return render(request, 'model.html', {'form': form,
 													  'message': "Error. Form incomplete. Please, fill out every field!"})
@@ -471,9 +418,7 @@ def prediction(request):
 				var_dic["highway_fuel_economy"] = highway_fuel_economy
 				var_dic["maximum_seating"] = maximum_seating
 
-
 				car_specs = pd.DataFrame(var_dic, index=[0]).to_numpy().reshape(1,-1)
-
 				predictedPrice = round(int(myModel.predict(car_specs)))
 
 				return render(request, 'prediction.html', {'predictedPrice': predictedPrice,
@@ -496,14 +441,8 @@ def prediction(request):
 														   'highway_fuel_economy': highway_fuel_economy,
 														   'maximum_seating': maximum_seating})
 
-
-
-			
-
 		else:
 			return render(request, 'model.html', {'form': form})
-
-
 
 col_names = ['city_fuel_economy',
 			 'engine_displacement',

@@ -1,10 +1,6 @@
 from django.db import models
 from django import forms
 
-
-
-
-# Create your models here.
 class Vehicle(models.Model):
     make = forms.CharField(max_length=30)
     model = forms.CharField(max_length=30)
@@ -26,4 +22,4 @@ class Vehicle(models.Model):
     maximum_seating = forms.IntegerField()
 
     def __str__(self):
-        return '{} {}'.format(self.make, self.fuel_type)
+        return '{} {}'.format(self.make, self.model)

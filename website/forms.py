@@ -1,8 +1,8 @@
 from django import forms
 from .models import Vehicle
+from django.conf import settings
 import json
 import os
-from django.conf import settings
 
 
 json_folder = settings.BASE_DIR / 'JSON'
