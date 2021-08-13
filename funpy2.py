@@ -52,7 +52,35 @@ def return_body_type(make, model):
 
     return all_bodies
 
-a = return_body_type('Audi', 'A6')
+
+
+
+
+filepath_2 = '/Users/alvarolozanoalonso/desktop/project_tfm/tfm/JSON/web_dic.json'
+
+def return_engine_displacement(make, model, body, fuel, transmission, horsepower):
+    all_data = readJson(filepath_2)
+
+    all_displacements = []
+
+    for x in all_data:
+        if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission) and (x['horsepower'] == horsepower):
+            if x['engine_displacement'] not in all_displacements:
+                all_displacements.append(x['engine_displacement'])
+
+    return all_displacements
+
+
+a = return_engine_displacement('Audi', 'A4', 'Convertible', 'Gasoline', 'A', 170)
 print(a)
 
-get_make()
+
+
+
+
+
+
+
+
+
+

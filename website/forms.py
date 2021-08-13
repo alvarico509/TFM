@@ -50,29 +50,6 @@ EXTERIOR_COLOR_CHOICES = [
     ('YELLOW', 'Yellow'),
 ]
 
-WHEEL_SYSTEM_CHOICES = [
-    ('RWD', 'Rear Wheel Drive (RWD)'),
-    ('FWD', 'Forward Wheel Drive (FWD)'),
-    ('AWD', 'All Wheel Drive (AWD)'),
-    ('4WD', 'Four Wheel Drive (4WD)'),
-    ('4x2', 'Two Wheel Drive (4x2)'),
-]
-
-ENGINE_TYPE_CHOICES = [
-    ('I2', 'Inline 2 cylinders'),
-    ('I3', 'Inline 3 cylinders'),
-    ('I4', 'Inline 4 cylinders'),
-    ('I5', 'Inline 5 cylinders'),
-    ('I6', 'Inline 6 cylinders'),
-    ('H4', 'Horizontal 4 cylinders'),
-    ('H6', 'Horizontal 6 cylinders'),
-    ('V6', 'V6'),
-    ('V8', 'V8'),
-    ('V10', 'V10'),
-    ('V12', 'V12'),
-    ('W12', 'W12'),
-    ('W16', 'W16'),
-]
 
 class VehicleForm(forms.ModelForm):
     make = forms.ChoiceField(
@@ -96,26 +73,6 @@ class VehicleForm(forms.ModelForm):
                     label='Exterior color:',
                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_exterior_color'}),
                     )
-    wheel_system = forms.ChoiceField(
-                    choices = WHEEL_SYSTEM_CHOICES,
-                    required = True,
-                    initial = '4WD',
-                    label = 'Wheel system:',
-                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_wheel_system'}),
-                    )
-    engine_type = forms.ChoiceField(
-                    choices = ENGINE_TYPE_CHOICES,
-                    required = True,
-                    initial = 'V6',
-                    label='Engine type:',
-                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_engine_type'}),
-                    )
-    engine_displacement = forms.ChoiceField(
-                    required=True,
-                    initial=3500,
-                    choices=[(x, x) for x in range(700, 8500, 100)],
-                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_engine_displacement'}),
-                    )
     mileage = forms.IntegerField(
                     required = True,
                     label = 'Mileage:',
@@ -125,12 +82,6 @@ class VehicleForm(forms.ModelForm):
                     widget = forms.NumberInput(attrs={'class': 'form-control', 
                                                       'id': 'id_mileage', 
                                                       'step': "1"}),
-                    )
-    transmission_display = forms.ChoiceField(
-                    required=True,
-                    initial=6,
-                    choices=[(x, x) for x in range(1, 11)],
-                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_transmission_display'}),
                     )
     year = forms.ChoiceField(
                     required=True,
@@ -166,6 +117,5 @@ class VehicleForm(forms.ModelForm):
 
     class Meta:
             model = Vehicle
-            fields = ['make', 'is_new', 'exterior_color', 'wheel_system', 'engine_type', 
-                      'engine_displacement', 'mileage', 'transmission_display', 'year', 'fuel_tank_volume',
+            fields = ['make', 'is_new', 'exterior_color', 'mileage', 'year', 'fuel_tank_volume',
                       'city_fuel_economy', 'highway_fuel_economy', 'maximum_seating']

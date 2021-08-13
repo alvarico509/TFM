@@ -114,6 +114,51 @@ def getHorsepower(request):
     horsepowers = return_horsepower(make, model, body, fuel, transmission)
     return JsonResponse({'horsepowers': horsepowers})
 
+def getEngineDisplacement(request):
+    make = request.POST.get('make')
+    model = request.POST.get('model')
+    body = request.POST.get('body')
+    fuel = request.POST.get('fuel')
+    transmission = request.POST.get('transmission')
+    horsepower = request.POST.get('horsepower')
+    displacements = return_engine_displacement(make, model, body, fuel, transmission, horsepower)
+    return JsonResponse({'displacements': displacements})
+
+def getEngineType(request):
+    make = request.POST.get('make')
+    model = request.POST.get('model')
+    body = request.POST.get('body')
+    fuel = request.POST.get('fuel')
+    transmission = request.POST.get('transmission')
+    horsepower = request.POST.get('horsepower')
+    displacement = request.POST.get('displacement')
+    engines = return_engine_type(make, model, body, fuel, transmission, horsepower, displacement)
+    return JsonResponse({'engines': engines})
+
+def getWheelSystem(request):
+    make = request.POST.get('make')
+    model = request.POST.get('model')
+    body = request.POST.get('body')
+    fuel = request.POST.get('fuel')
+    transmission = request.POST.get('transmission')
+    horsepower = request.POST.get('horsepower')
+    displacement = request.POST.get('displacement')
+    engine_type = request.POST.get('engine_type')
+    wheels = return_wheel_system(make, model, body, fuel, transmission, horsepower, displacement, engine_type)
+    return JsonResponse({'wheels': wheels})
+
+def getGear(request):
+    make = request.POST.get('make')
+    model = request.POST.get('model')
+    body = request.POST.get('body')
+    fuel = request.POST.get('fuel')
+    transmission = request.POST.get('transmission')
+    horsepower = request.POST.get('horsepower')
+    displacement = request.POST.get('displacement')
+    engine_type = request.POST.get('engine_type')
+    wheel_system = request.POST.get('wheel_system')
+    gears = return_gear(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system)
+    return JsonResponse({'gears': gears})
 
 
 json_folder = settings.BASE_DIR / 'JSON'
@@ -130,7 +175,6 @@ def return_model_by_make(make):
         		all_models.append(x['model_name'])
 
     return all_models
-
 
 
 filepath_2 = os.path.join(json_folder, os.path.basename("web_dic.json"))
@@ -184,6 +228,55 @@ def return_horsepower(make, model, body, fuel, transmission):
 
     return all_horsepowers
 
+def return_engine_displacement(make, model, body, fuel, transmission, horsepower):
+    all_data = readJson(filepath_2)
+
+    all_displacements = []
+
+    for x in all_data:
+        if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission) and (x['horsepower'] == int(horsepower)):
+            if x['engine_displacement'] not in all_displacements:
+                all_displacements.append(x['engine_displacement'])
+
+    return all_displacements
+
+def return_engine_type(make, model, body, fuel, transmission, horsepower, displacement):
+    all_data = readJson(filepath_2)
+
+    all_engines = []
+
+    for x in all_data:
+        if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission) and (x['horsepower'] == int(horsepower)) and (x['engine_displacement'] == int(displacement)):
+            if x['engine_type'] not in all_engines:
+                all_engines.append(x['engine_type'])
+
+    return all_engines
+
+def return_wheel_system(make, model, body, fuel, transmission, horsepower, displacement, engine_type):
+    all_data = readJson(filepath_2)
+
+    all_wheels = []
+
+    for x in all_data:
+        if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission) and (x['horsepower'] == int(horsepower)) and (x['engine_displacement'] == int(displacement)) and (x['engine_type'] == engine_type):
+            if x['wheel_system'] not in all_wheels:
+                all_wheels.append(x['wheel_system'])
+
+    return all_wheels
+
+def return_gear(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system):
+    all_data = readJson(filepath_2)
+
+    all_gears = []
+
+    for x in all_data:
+        if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission) and (x['horsepower'] == int(horsepower)) and (x['engine_displacement'] == int(displacement)) and (x['engine_type'] == engine_type) and (x['wheel_system'] == wheel_system):
+            if x['transmission_display'] not in all_gears:
+                all_gears.append(x['transmission_display'])
+
+    return all_gears
+
+
 def prediction(request):
 	dic = {}
 	if request.method == 'POST':
@@ -194,15 +287,15 @@ def prediction(request):
 			fuel_type = request.POST['fuel_type']
 			transmission = request.POST['transmission']
 			horsepower = request.POST['horsepower']
+			engine_displacement = request.POST['displacement']
+			engine_type = request.POST['engine_type']
+			wheel_system = request.POST['wheel_system']
+			transmission_display = request.POST['transmission_display']
 
 			make = form.cleaned_data.get('make')
 			is_new = form.cleaned_data.get('is_new')
 			exterior_color = form.cleaned_data.get('exterior_color')
-			wheel_system = form.cleaned_data.get('wheel_system')
-			engine_type = form.cleaned_data.get('engine_type')
-			engine_displacement = form.cleaned_data.get('engine_displacement')
 			mileage = form.cleaned_data.get('mileage')
-			transmission_display = form.cleaned_data.get('transmission_display')
 			year = form.cleaned_data.get('year')
 			fuel_tank_volume = form.cleaned_data.get('fuel_tank_volume')
 			city_fuel_economy = form.cleaned_data.get('city_fuel_economy')

@@ -51,48 +51,56 @@
             <div class="form-group col-md-6">
               <label>Model:</label>
               <select id="id_model" class="form-control" name="model">
-                <option value="-----">Select Model</option>
+                <option value="-----">-</option>
               </select>
             </div>
             <div class="form-group col-md-6">
               <label>Body type:</label>
               <select id="id_body_type" class="form-control" name="body_type">
-                <option value="-----">Select Body Type</option>
+                <option value="-----">-</option>
               </select>
             </div>
             <div class="form-group col-md-6">
               <label>Fuel type:</label>
               <select id="id_fuel_type" class="form-control" name="fuel_type">
-                <option value="-----">Select Fuel Type</option>
+                <option value="-----">-</option>
               </select>
             </div>
             <div class="form-group col-md-6">
               <label>Transmission:</label>
               <select id="id_transmission" class="form-control" name="transmission">
-                <option value="-----">Select Transmission</option>
+                <option value="-----">-</option>
               </select>
             </div>
             <div class="form-group col-md-6">
               <label>Horsepower:</label>
-              <select id="id_horsepower" class="form-control" name="Horsepower">
-                <option value="-----">Select Horsepower</option>
+              <select id="id_horsepower" class="form-control" name="horsepower">
+                <option value="-----">-</option>
               </select>
             </div>
             <div class="form-group col-md-6">
-              <label>Engine displacement (cc):</label>
-              {{ form.engine_displacement }}
+              <label>Engine displacement:</label>
+              <select id="id_displacement" class="form-control" name="displacement">
+                <option value="-----">-</option>
+              </select>
             </div>
             <div class="form-group col-md-6">
-              <label>Engine:</label>
-              {{ form.engine_type }}
+              <label>Engine type:</label>
+              <select id="id_engine_type" class="form-control" name="engine_type">
+                <option value="-----">-</option>
+              </select>
             </div>
             <div class="form-group col-md-6">
               <label>Wheel system:</label>
-              {{ form.wheel_system }}
+              <select id="id_wheel_system" class="form-control" name="wheel_system">
+                <option value="-----">-</option>
+              </select>
             </div>
             <div class="form-group col-md-6">
               <label>Gears:</label>
-              {{ form.transmission_display }}
+              <select id="id_transmission_display" class="form-control" name="transmission_display">
+                <option value="-----">-</option>
+              </select>
             </div>
             <div class="form-group col-md-6">
               <label>Year:</label>
@@ -258,6 +266,146 @@ $(document).on('change', "#id_transmission", function () {
               html_data += `<option value="${data}">${data}</option>`
           });
           $("#id_horsepower").html(html_data);
+        }
+      });
+  });
+</script>
+
+<script type="text/javascript">
+$(document).on('change', "#id_horsepower", function () {
+      var horsepower = $(this).val();
+      var transmission = $("#id_transmission").val();
+      var fuel = $("#id_fuel_type").val();
+      var body = $("#id_body_type").val();
+      var model = $("#id_model").val();
+      var make = $("#id_make").val();
+      $.ajax({
+        type: "POST",
+        url: "{% url 'getEngineDisplacement' %}",
+        data: {
+          'csrfmiddlewaretoken': '{{ csrf_token }}',
+          'horsepower': horsepower,
+          'transmission': transmission,
+          'fuel': fuel,
+          'body': body,
+          'model': model,
+          'make': make,
+        },
+        success: function (data) {
+          console.log(data.displacements);
+          let html_data = '<option value="">Select Displacement</option>';
+          data.displacements.forEach(function (data) {
+              html_data += `<option value="${data}">${data}</option>`
+          });
+          $("#id_displacement").html(html_data);
+        }
+      });
+  });
+</script>
+
+<script type="text/javascript">
+$(document).on('change', "#id_displacement", function () {
+      var displacement = $(this).val();
+      var horsepower = $("#id_horsepower").val();
+      var transmission = $("#id_transmission").val();
+      var fuel = $("#id_fuel_type").val();
+      var body = $("#id_body_type").val();
+      var model = $("#id_model").val();
+      var make = $("#id_make").val();
+      $.ajax({
+        type: "POST",
+        url: "{% url 'getEngineType' %}",
+        data: {
+          'csrfmiddlewaretoken': '{{ csrf_token }}',
+          'displacement': displacement,
+          'horsepower': horsepower,
+          'transmission': transmission,
+          'fuel': fuel,
+          'body': body,
+          'model': model,
+          'make': make,
+        },
+        success: function (data) {
+          console.log(data.engines);
+          let html_data = '<option value="">Select Engine Type</option>';
+          data.engines.forEach(function (data) {
+              html_data += `<option value="${data}">${data}</option>`
+          });
+          $("#id_engine_type").html(html_data);
+        }
+      });
+  });
+</script>
+
+<script type="text/javascript">
+$(document).on('change', "#id_engine_type", function () {
+      var engine_type = $(this).val();
+      var displacement = $("#id_displacement").val();
+      var horsepower = $("#id_horsepower").val();
+      var transmission = $("#id_transmission").val();
+      var fuel = $("#id_fuel_type").val();
+      var body = $("#id_body_type").val();
+      var model = $("#id_model").val();
+      var make = $("#id_make").val();
+      $.ajax({
+        type: "POST",
+        url: "{% url 'getWheelSystem' %}",
+        data: {
+          'csrfmiddlewaretoken': '{{ csrf_token }}',
+          'engine_type': engine_type,
+          'displacement': displacement,
+          'horsepower': horsepower,
+          'transmission': transmission,
+          'fuel': fuel,
+          'body': body,
+          'model': model,
+          'make': make,
+        },
+        success: function (data) {
+          console.log(data.wheels);
+          let html_data = '<option value="">Select Wheel System</option>';
+          data.wheels.forEach(function (data) {
+              html_data += `<option value="${data}">${data}</option>`
+          });
+          $("#id_wheel_system").html(html_data);
+        }
+      });
+  });
+</script>
+
+<script type="text/javascript">
+$(document).on('change', "#id_wheel_system", function () {
+      var wheel_system = $(this).val();
+      var engine_type = $("#id_engine_type").val();
+      var displacement = $("#id_displacement").val();
+      var horsepower = $("#id_horsepower").val();
+      var transmission = $("#id_transmission").val();
+      var fuel = $("#id_fuel_type").val();
+      var body = $("#id_body_type").val();
+      var model = $("#id_model").val();
+      var make = $("#id_make").val();
+      $.ajax({
+        type: "POST",
+        url: "{% url 'getGear' %}",
+        data: {
+          'csrfmiddlewaretoken': '{{ csrf_token }}',
+          'wheel_system': wheel_system,
+          'engine_type': engine_type,
+          'displacement': displacement,
+          'horsepower': horsepower,
+          'transmission': transmission,
+          'fuel': fuel,
+          'body': body,
+          'model': model,
+          'make': make,
+        },
+        success: function (data) {
+          console.log(data.gears);
+          let html_data = '<option value="">Select Gears</option>';
+          data.gears.forEach(function (data) {
+              html_data += `<option value="${data}">${data}</option>`
+          });
+          $("#id_transmission_display").html(html_data);
         }
       });
   });
