@@ -16,7 +16,7 @@ def get_make():
     """ GET MAKE SELECTION """
     all_data = readJson(filepath_2)
     all_makes = []
-    all_makes.append(["Default", "Select Make"])
+    all_makes.append(["Empty", "Select Make"])
 
     for x in all_data:
         if (x['make_name'], x['make_name']) in all_makes:
