@@ -16,6 +16,7 @@ def get_make():
     """ GET MAKE SELECTION """
     all_data = readJson(filepath)
     all_makes = []
+    all_makes.append(["Default", "Select Make"])
 
     for x in all_data:
         if (x['make_name'], x['make_name']) in all_makes:
@@ -45,7 +46,7 @@ EXTERIOR_COLOR_CHOICES = [
     ('RED', 'Red'),
     ('SILVER', 'Silver'),
     ('TEAL', 'Teal'),
-    ('UNKNOWN', 'Other'),
+    ('UNKNOWN', 'Select Color'),
     ('WHITE', 'White'),
     ('YELLOW', 'Yellow'),
 ]
@@ -55,7 +56,7 @@ class VehicleForm(forms.ModelForm):
     make = forms.ChoiceField(
                     choices = get_make(),
                     required = True,
-                    initial = 'Ford',
+                    initial = 'Default',
                     label='Make:',
                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_make'}),
                     )
@@ -69,53 +70,21 @@ class VehicleForm(forms.ModelForm):
     exterior_color = forms.ChoiceField(
                     choices = EXTERIOR_COLOR_CHOICES,
                     required = True,
-                    initial = 'BLACK',
+                    initial = 'UNKNOWN',
                     label='Exterior color:',
                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_exterior_color'}),
                     )
     mileage = forms.IntegerField(
                     required = True,
                     label = 'Mileage:',
-                    initial = 66211,
                     max_value = 1000000,
                     min_value = 0,
                     widget = forms.NumberInput(attrs={'class': 'form-control', 
                                                       'id': 'id_mileage', 
                                                       'step': "1"}),
                     )
-    year = forms.ChoiceField(
-                    required=True,
-                    initial=2015,
-                    choices=[(x, x) for x in range(1915, 2022)],
-                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_year'}),
-                    )
-    fuel_tank_volume = forms.ChoiceField(
-                    required=True,
-                    initial=36,
-                    choices=[(x, x) for x in range(1, 65)],
-                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_fuel_tank_volume'}),
-                    )
-    city_fuel_economy = forms.ChoiceField(
-                    required=True,
-                    initial=17,
-                    choices=[(x, x) for x in range(7, 128)],
-                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_city_fuel_economy'}),
-                    )
-    highway_fuel_economy = forms.ChoiceField(
-                    required=True,
-                    initial=23,
-                    choices=[(x, x) for x in range(10, 128)],
-                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_highway_fuel_economy'}),
-                    )
-    maximum_seating = forms.ChoiceField(
-                    required=True,
-                    initial=5,
-                    choices=[(x, x) for x in range(2, 16)],
-                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_maximum_seating'}),
-                    )
 
 
     class Meta:
             model = Vehicle
-            fields = ['make', 'is_new', 'exterior_color', 'mileage', 'year', 'fuel_tank_volume',
-                      'city_fuel_economy', 'highway_fuel_economy', 'maximum_seating']
+            fields = ['make', 'is_new', 'exterior_color', 'mileage']

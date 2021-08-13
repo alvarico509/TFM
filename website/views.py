@@ -160,6 +160,89 @@ def getGear(request):
     gears = return_gear(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system)
     return JsonResponse({'gears': gears})
 
+def getGear(request):
+    make = request.POST.get('make')
+    model = request.POST.get('model')
+    body = request.POST.get('body')
+    fuel = request.POST.get('fuel')
+    transmission = request.POST.get('transmission')
+    horsepower = request.POST.get('horsepower')
+    displacement = request.POST.get('displacement')
+    engine_type = request.POST.get('engine_type')
+    wheel_system = request.POST.get('wheel_system')
+    gears = return_gear(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system)
+    return JsonResponse({'gears': gears})
+
+def getYear(request):
+    make = request.POST.get('make')
+    model = request.POST.get('model')
+    body = request.POST.get('body')
+    fuel = request.POST.get('fuel')
+    transmission = request.POST.get('transmission')
+    horsepower = request.POST.get('horsepower')
+    displacement = request.POST.get('displacement')
+    engine_type = request.POST.get('engine_type')
+    wheel_system = request.POST.get('wheel_system')
+    transmission_display = request.POST.get('transmission_display')
+    years = return_year(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system, transmission_display)
+    return JsonResponse({'years': years})
+
+def getFuelTankVolume(request):
+    make = request.POST.get('make')
+    model = request.POST.get('model')
+    body = request.POST.get('body')
+    fuel = request.POST.get('fuel')
+    transmission = request.POST.get('transmission')
+    horsepower = request.POST.get('horsepower')
+    displacement = request.POST.get('displacement')
+    engine_type = request.POST.get('engine_type')
+    wheel_system = request.POST.get('wheel_system')
+    transmission_display = request.POST.get('transmission_display')
+    tanks = return_fuel_tank_volume(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system, transmission_display)
+    return JsonResponse({'tanks': tanks})
+
+def getCityFuelEconomy(request):
+    make = request.POST.get('make')
+    model = request.POST.get('model')
+    body = request.POST.get('body')
+    fuel = request.POST.get('fuel')
+    transmission = request.POST.get('transmission')
+    horsepower = request.POST.get('horsepower')
+    displacement = request.POST.get('displacement')
+    engine_type = request.POST.get('engine_type')
+    wheel_system = request.POST.get('wheel_system')
+    transmission_display = request.POST.get('transmission_display')
+    cities = return_city_fuel_economy(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system, transmission_display)
+    return JsonResponse({'cities': cities})
+
+def getHighwayFuelEconomy(request):
+    make = request.POST.get('make')
+    model = request.POST.get('model')
+    body = request.POST.get('body')
+    fuel = request.POST.get('fuel')
+    transmission = request.POST.get('transmission')
+    horsepower = request.POST.get('horsepower')
+    displacement = request.POST.get('displacement')
+    engine_type = request.POST.get('engine_type')
+    wheel_system = request.POST.get('wheel_system')
+    transmission_display = request.POST.get('transmission_display')
+    highways = return_highway_fuel_economy(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system, transmission_display)
+    return JsonResponse({'highways': highways})
+
+def getSeats(request):
+    make = request.POST.get('make')
+    model = request.POST.get('model')
+    body = request.POST.get('body')
+    fuel = request.POST.get('fuel')
+    transmission = request.POST.get('transmission')
+    horsepower = request.POST.get('horsepower')
+    displacement = request.POST.get('displacement')
+    engine_type = request.POST.get('engine_type')
+    wheel_system = request.POST.get('wheel_system')
+    transmission_display = request.POST.get('transmission_display')
+    seats = return_seats(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system, transmission_display)
+    return JsonResponse({'seats': seats})
+
 
 json_folder = settings.BASE_DIR / 'JSON'
 filepath = os.path.join(json_folder, os.path.basename("make_model_A.json"))
@@ -276,6 +359,71 @@ def return_gear(make, model, body, fuel, transmission, horsepower, displacement,
 
     return all_gears
 
+def return_year(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system, transmission_display):
+    all_data = readJson(filepath_2)
+
+    all_years = []
+
+    for x in all_data:
+        if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission) and (x['horsepower'] == int(horsepower)) and (x['engine_displacement'] == int(displacement)) and (x['engine_type'] == engine_type) and (x['wheel_system'] == wheel_system) and (x['transmission_display'] == int(transmission_display)):
+            if x['year'] not in all_years:
+                all_years.append(x['year'])
+
+    all_years = list(map(int, all_years))
+    max_year = max(all_years) + 1
+    min_year = min(all_years)
+    all_years = [x for x in range(min_year, max_year)]
+
+    return all_years
+
+def return_fuel_tank_volume(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system, transmission_display):
+    all_data = readJson(filepath_2)
+
+    all_tanks = []
+
+    for x in all_data:
+        if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission) and (x['horsepower'] == int(horsepower)) and (x['engine_displacement'] == int(displacement)) and (x['engine_type'] == engine_type) and (x['wheel_system'] == wheel_system) and (x['transmission_display'] == int(transmission_display)):
+            if x['fuel_tank_volume'] not in all_tanks:
+                all_tanks.append(x['fuel_tank_volume'])
+
+    return all_tanks
+
+def return_city_fuel_economy(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system, transmission_display):
+    all_data = readJson(filepath_2)
+
+    all_cities = []
+
+    for x in all_data:
+        if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission) and (x['horsepower'] == int(horsepower)) and (x['engine_displacement'] == int(displacement)) and (x['engine_type'] == engine_type) and (x['wheel_system'] == wheel_system) and (x['transmission_display'] == int(transmission_display)):
+            if x['city_fuel_economy'] not in all_cities:
+                all_cities.append(x['city_fuel_economy'])
+
+    return all_cities
+
+def return_highway_fuel_economy(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system, transmission_display):
+    all_data = readJson(filepath_2)
+
+    all_highways = []
+
+    for x in all_data:
+        if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission) and (x['horsepower'] == int(horsepower)) and (x['engine_displacement'] == int(displacement)) and (x['engine_type'] == engine_type) and (x['wheel_system'] == wheel_system) and (x['transmission_display'] == int(transmission_display)):
+            if x['highway_fuel_economy'] not in all_highways:
+                all_highways.append(x['highway_fuel_economy'])
+
+    return all_highways
+
+def return_seats(make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system, transmission_display):
+    all_data = readJson(filepath_2)
+
+    all_seats = []
+
+    for x in all_data:
+        if (x['make_name'] == make) and (x['model_name'] == model) and (x['body_type'] == body) and (x['fuel_type'] == fuel)  and (x['transmission'] == transmission) and (x['horsepower'] == int(horsepower)) and (x['engine_displacement'] == int(displacement)) and (x['engine_type'] == engine_type) and (x['wheel_system'] == wheel_system) and (x['transmission_display'] == int(transmission_display)):
+            if x['maximum_seating'] not in all_seats:
+                all_seats.append(x['maximum_seating'])
+
+    return all_seats
+
 
 def prediction(request):
 	dic = {}
@@ -291,16 +439,16 @@ def prediction(request):
 			engine_type = request.POST['engine_type']
 			wheel_system = request.POST['wheel_system']
 			transmission_display = request.POST['transmission_display']
+			year = request.POST['year']
+			fuel_tank_volume = request.POST['fuel_tank_volume']
+			city_fuel_economy = request.POST['city_fuel_economy']
+			highway_fuel_economy = request.POST['highway_fuel_economy']
+			maximum_seating = request.POST['maximum_seating']
 
 			make = form.cleaned_data.get('make')
 			is_new = form.cleaned_data.get('is_new')
 			exterior_color = form.cleaned_data.get('exterior_color')
 			mileage = form.cleaned_data.get('mileage')
-			year = form.cleaned_data.get('year')
-			fuel_tank_volume = form.cleaned_data.get('fuel_tank_volume')
-			city_fuel_economy = form.cleaned_data.get('city_fuel_economy')
-			highway_fuel_economy = form.cleaned_data.get('highway_fuel_economy')
-			maximum_seating = form.cleaned_data.get('maximum_seating')
 
 			var_dic[make] = 1
 			var_dic["model_" + model] = 1
@@ -345,8 +493,8 @@ def prediction(request):
 													   'highway_fuel_economy': highway_fuel_economy,
 													   'maximum_seating': maximum_seating})
 
-		#else:
-			#return render(request, 'model.html', {'form': form})
+		else:
+			return render(request, 'model.html', {'form': form})
 
 
 

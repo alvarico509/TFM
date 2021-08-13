@@ -104,30 +104,40 @@
             </div>
             <div class="form-group col-md-6">
               <label>Year:</label>
-              {{ form.year }}
+              <select id="id_year" class="form-control" name="year">
+                <option value="-----">-</option>
+              </select>
             </div>
             <div class="form-group col-md-6">
-              <label>Fuel tank volume (gal):</label>
-              {{ form.fuel_tank_volume }}
+              <label>Fuel tank volume:</label>
+              <select id="id_fuel_tank_volume" class="form-control" name="fuel_tank_volume">
+                <option value="-----">-</option>
+              </select>
             </div>
             <div class="form-group col-md-6">
               <label>City fuel economy (km/l):</label>
-              {{ form.city_fuel_economy }}
+              <select id="id_city_fuel_economy" class="form-control" name="city_fuel_economy">
+                <option value="-----">-</option>
+              </select>
             </div>
             <div class="form-group col-md-6">
               <label>Highway fuel economy (km/l):</label>
-              {{ form.highway_fuel_economy }}
+              <select id="id_highway_fuel_economy" class="form-control" name="highway_fuel_economy">
+                <option value="-----">-</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Number of seats:</label>
+              <select id="id_maximum_seating" class="form-control" name="maximum_seating">
+                <option value="-----">-</option>
+              </select>
             </div>
             <div class="form-group col-md-6">
               <label>Color:</label>
               {{ form.exterior_color }}
             </div>
             <div class="form-group col-md-6">
-              <label>Seats:</label>
-              {{ form.maximum_seating }}
-            </div>
-            <div class="form-group col-md-6">
-              <label>Status:</label>
+              <label>Vehicle condition:</label>
               {{ form.is_new }}
             </div>
             <div class="form-group col-md-6">
@@ -157,6 +167,20 @@ $(document).on('change', "#id_make", function () {
               html_data += `<option value="${data}">${data}</option>`
           });
           $("#id_model").html(html_data);
+          clear_dropdown = '<option value="">-</option>';
+          $("#id_body_type").html(clear_dropdown);
+          $("#id_fuel_type").html(clear_dropdown);
+          $("#id_transmission").html(clear_dropdown);
+          $("#id_horsepower").html(clear_dropdown);
+          $("#id_displacement").html(clear_dropdown);
+          $("#id_engine_type").html(clear_dropdown);
+          $("#id_wheel_system").html(clear_dropdown);
+          $("#id_transmission_display").html(clear_dropdown);
+          $("#id_year").html(clear_dropdown);
+          $("#id_fuel_tank_volume").html(clear_dropdown);
+          $("#id_city_fuel_economy").html(clear_dropdown);
+          $("#id_highway_fuel_economy").html(clear_dropdown);
+          $("#id_maximum_seating").html(clear_dropdown);
         }
       });
   });
@@ -181,6 +205,19 @@ $(document).on('change', "#id_model", function () {
               html_data += `<option value="${data}">${data}</option>`
           });
           $("#id_body_type").html(html_data);
+          clear_dropdown = '<option value="">-</option>';
+          $("#id_fuel_type").html(clear_dropdown);
+          $("#id_transmission").html(clear_dropdown);
+          $("#id_horsepower").html(clear_dropdown);
+          $("#id_displacement").html(clear_dropdown);
+          $("#id_engine_type").html(clear_dropdown);
+          $("#id_wheel_system").html(clear_dropdown);
+          $("#id_transmission_display").html(clear_dropdown);
+          $("#id_year").html(clear_dropdown);
+          $("#id_fuel_tank_volume").html(clear_dropdown);
+          $("#id_city_fuel_economy").html(clear_dropdown);
+          $("#id_highway_fuel_economy").html(clear_dropdown);
+          $("#id_maximum_seating").html(clear_dropdown);
         }
       });
   });
@@ -207,6 +244,18 @@ $(document).on('change', "#id_body_type", function () {
               html_data += `<option value="${data}">${data}</option>`
           });
           $("#id_fuel_type").html(html_data);
+          clear_dropdown = '<option value="">-</option>';
+          $("#id_transmission").html(clear_dropdown);
+          $("#id_horsepower").html(clear_dropdown);
+          $("#id_displacement").html(clear_dropdown);
+          $("#id_engine_type").html(clear_dropdown);
+          $("#id_wheel_system").html(clear_dropdown);
+          $("#id_transmission_display").html(clear_dropdown);
+          $("#id_year").html(clear_dropdown);
+          $("#id_fuel_tank_volume").html(clear_dropdown);
+          $("#id_city_fuel_economy").html(clear_dropdown);
+          $("#id_highway_fuel_economy").html(clear_dropdown);
+          $("#id_maximum_seating").html(clear_dropdown);
         }
       });
   });
@@ -235,6 +284,17 @@ $(document).on('change', "#id_fuel_type", function () {
               html_data += `<option value="${data}">${data}</option>`
           });
           $("#id_transmission").html(html_data);
+          clear_dropdown = '<option value="">-</option>';
+          $("#id_horsepower").html(clear_dropdown);
+          $("#id_displacement").html(clear_dropdown);
+          $("#id_engine_type").html(clear_dropdown);
+          $("#id_wheel_system").html(clear_dropdown);
+          $("#id_transmission_display").html(clear_dropdown);
+          $("#id_year").html(clear_dropdown);
+          $("#id_fuel_tank_volume").html(clear_dropdown);
+          $("#id_city_fuel_economy").html(clear_dropdown);
+          $("#id_highway_fuel_economy").html(clear_dropdown);
+          $("#id_maximum_seating").html(clear_dropdown);
         }
       });
   });
@@ -261,11 +321,21 @@ $(document).on('change', "#id_transmission", function () {
         },
         success: function (data) {
           console.log(data.horsepowers);
-          let html_data = '<option value="">Select Horsepower</option>';
+          let html_data = '<option value="">Select Horsepower (hp)</option>';
           data.horsepowers.forEach(function (data) {
               html_data += `<option value="${data}">${data}</option>`
           });
           $("#id_horsepower").html(html_data);
+          clear_dropdown = '<option value="">-</option>';
+          $("#id_displacement").html(clear_dropdown);
+          $("#id_engine_type").html(clear_dropdown);
+          $("#id_wheel_system").html(clear_dropdown);
+          $("#id_transmission_display").html(clear_dropdown);
+          $("#id_year").html(clear_dropdown);
+          $("#id_fuel_tank_volume").html(clear_dropdown);
+          $("#id_city_fuel_economy").html(clear_dropdown);
+          $("#id_highway_fuel_economy").html(clear_dropdown);
+          $("#id_maximum_seating").html(clear_dropdown);
         }
       });
   });
@@ -293,11 +363,20 @@ $(document).on('change', "#id_horsepower", function () {
         },
         success: function (data) {
           console.log(data.displacements);
-          let html_data = '<option value="">Select Displacement</option>';
+          let html_data = '<option value="">Select Displacement (cc)</option>';
           data.displacements.forEach(function (data) {
               html_data += `<option value="${data}">${data}</option>`
           });
           $("#id_displacement").html(html_data);
+          clear_dropdown = '<option value="">-</option>';
+          $("#id_engine_type").html(clear_dropdown);
+          $("#id_wheel_system").html(clear_dropdown);
+          $("#id_transmission_display").html(clear_dropdown);
+          $("#id_year").html(clear_dropdown);
+          $("#id_fuel_tank_volume").html(clear_dropdown);
+          $("#id_city_fuel_economy").html(clear_dropdown);
+          $("#id_highway_fuel_economy").html(clear_dropdown);
+          $("#id_maximum_seating").html(clear_dropdown);
         }
       });
   });
@@ -332,6 +411,14 @@ $(document).on('change', "#id_displacement", function () {
               html_data += `<option value="${data}">${data}</option>`
           });
           $("#id_engine_type").html(html_data);
+          clear_dropdown = '<option value="">-</option>';
+          $("#id_wheel_system").html(clear_dropdown);
+          $("#id_transmission_display").html(clear_dropdown);
+          $("#id_year").html(clear_dropdown);
+          $("#id_fuel_tank_volume").html(clear_dropdown);
+          $("#id_city_fuel_economy").html(clear_dropdown);
+          $("#id_highway_fuel_economy").html(clear_dropdown);
+          $("#id_maximum_seating").html(clear_dropdown);
         }
       });
   });
@@ -368,6 +455,13 @@ $(document).on('change', "#id_engine_type", function () {
               html_data += `<option value="${data}">${data}</option>`
           });
           $("#id_wheel_system").html(html_data);
+          clear_dropdown = '<option value="">-</option>';
+          $("#id_transmission_display").html(clear_dropdown);
+          $("#id_year").html(clear_dropdown);
+          $("#id_fuel_tank_volume").html(clear_dropdown);
+          $("#id_city_fuel_economy").html(clear_dropdown);
+          $("#id_highway_fuel_economy").html(clear_dropdown);
+          $("#id_maximum_seating").html(clear_dropdown);
         }
       });
   });
@@ -406,12 +500,230 @@ $(document).on('change', "#id_wheel_system", function () {
               html_data += `<option value="${data}">${data}</option>`
           });
           $("#id_transmission_display").html(html_data);
+          clear_dropdown = '<option value="">-</option>';
+          $("#id_year").html(clear_dropdown);
+          $("#id_fuel_tank_volume").html(clear_dropdown);
+          $("#id_city_fuel_economy").html(clear_dropdown);
+          $("#id_highway_fuel_economy").html(clear_dropdown);
+          $("#id_maximum_seating").html(clear_dropdown);
         }
       });
   });
 </script>
 
+<script type="text/javascript">
+$(document).on('change', "#id_transmission_display", function () {
+      var transmission_display = $(this).val();
+      var wheel_system = $("#id_wheel_system").val();
+      var engine_type = $("#id_engine_type").val();
+      var displacement = $("#id_displacement").val();
+      var horsepower = $("#id_horsepower").val();
+      var transmission = $("#id_transmission").val();
+      var fuel = $("#id_fuel_type").val();
+      var body = $("#id_body_type").val();
+      var model = $("#id_model").val();
+      var make = $("#id_make").val();
+      $.ajax({
+        type: "POST",
+        url: "{% url 'getYear' %}",
+        data: {
+          'csrfmiddlewaretoken': '{{ csrf_token }}',
+          'transmission_display': transmission_display,
+          'wheel_system': wheel_system,
+          'engine_type': engine_type,
+          'displacement': displacement,
+          'horsepower': horsepower,
+          'transmission': transmission,
+          'fuel': fuel,
+          'body': body,
+          'model': model,
+          'make': make,
+        },
+        success: function (data) {
+          console.log(data.years);
+          let html_data = '<option value="">Select Year</option>';
+          data.years.forEach(function (data) {
+              html_data += `<option value="${data}">${data}</option>`
+          });
+          $("#id_year").html(html_data);
+          clear_dropdown = '<option value="">-</option>';
+          $("#id_fuel_tank_volume").html(clear_dropdown);
+          $("#id_city_fuel_economy").html(clear_dropdown);
+          $("#id_highway_fuel_economy").html(clear_dropdown);
+          $("#id_maximum_seating").html(clear_dropdown);
+        }
+      });
+  });
+</script>
 
+<script type="text/javascript">
+$(document).on('change', "#id_year", function () {
+      var transmission_display = $("#id_transmission_display").val();
+      var wheel_system = $("#id_wheel_system").val();
+      var engine_type = $("#id_engine_type").val();
+      var displacement = $("#id_displacement").val();
+      var horsepower = $("#id_horsepower").val();
+      var transmission = $("#id_transmission").val();
+      var fuel = $("#id_fuel_type").val();
+      var body = $("#id_body_type").val();
+      var model = $("#id_model").val();
+      var make = $("#id_make").val();
+      $.ajax({
+        type: "POST",
+        url: "{% url 'getFuelTankVolume' %}",
+        data: {
+          'csrfmiddlewaretoken': '{{ csrf_token }}',
+          'transmission_display': transmission_display,
+          'wheel_system': wheel_system,
+          'engine_type': engine_type,
+          'displacement': displacement,
+          'horsepower': horsepower,
+          'transmission': transmission,
+          'fuel': fuel,
+          'body': body,
+          'model': model,
+          'make': make,
+        },
+        success: function (data) {
+          console.log(data.tanks);
+          let html_data = '<option value="">Select Fuel Tank Volume (gal)</option>';
+          data.tanks.forEach(function (data) {
+              html_data += `<option value="${data}">${data}</option>`
+          });
+          $("#id_fuel_tank_volume").html(html_data);
+          clear_dropdown = '<option value="">-</option>';
+          $("#id_city_fuel_economy").html(clear_dropdown);
+          $("#id_highway_fuel_economy").html(clear_dropdown);
+          $("#id_maximum_seating").html(clear_dropdown);
+        }
+      });
+  });
+</script>
+
+<script type="text/javascript">
+$(document).on('change', "#id_fuel_tank_volume", function () {
+      var transmission_display = $("#id_transmission_display").val();
+      var wheel_system = $("#id_wheel_system").val();
+      var engine_type = $("#id_engine_type").val();
+      var displacement = $("#id_displacement").val();
+      var horsepower = $("#id_horsepower").val();
+      var transmission = $("#id_transmission").val();
+      var fuel = $("#id_fuel_type").val();
+      var body = $("#id_body_type").val();
+      var model = $("#id_model").val();
+      var make = $("#id_make").val();
+      $.ajax({
+        type: "POST",
+        url: "{% url 'getCityFuelEconomy' %}",
+        data: {
+          'csrfmiddlewaretoken': '{{ csrf_token }}',
+          'transmission_display': transmission_display,
+          'wheel_system': wheel_system,
+          'engine_type': engine_type,
+          'displacement': displacement,
+          'horsepower': horsepower,
+          'transmission': transmission,
+          'fuel': fuel,
+          'body': body,
+          'model': model,
+          'make': make,
+        },
+        success: function (data) {
+          console.log(data.cities);
+          let html_data = '<option value="">Select City Fuel Economy (km/l)</option>';
+          data.cities.forEach(function (data) {
+              html_data += `<option value="${data}">${data}</option>`
+          });
+          $("#id_city_fuel_economy").html(html_data);
+          clear_dropdown = '<option value="">-</option>';
+          $("#id_highway_fuel_economy").html(clear_dropdown);
+          $("#id_maximum_seating").html(clear_dropdown);
+        }
+      });
+  });
+</script>
+
+<script type="text/javascript">
+$(document).on('change', "#id_city_fuel_economy", function () {
+      var transmission_display = $("#id_transmission_display").val();
+      var wheel_system = $("#id_wheel_system").val();
+      var engine_type = $("#id_engine_type").val();
+      var displacement = $("#id_displacement").val();
+      var horsepower = $("#id_horsepower").val();
+      var transmission = $("#id_transmission").val();
+      var fuel = $("#id_fuel_type").val();
+      var body = $("#id_body_type").val();
+      var model = $("#id_model").val();
+      var make = $("#id_make").val();
+      $.ajax({
+        type: "POST",
+        url: "{% url 'getHighwayFuelEconomy' %}",
+        data: {
+          'csrfmiddlewaretoken': '{{ csrf_token }}',
+          'transmission_display': transmission_display,
+          'wheel_system': wheel_system,
+          'engine_type': engine_type,
+          'displacement': displacement,
+          'horsepower': horsepower,
+          'transmission': transmission,
+          'fuel': fuel,
+          'body': body,
+          'model': model,
+          'make': make,
+        },
+        success: function (data) {
+          console.log(data.highways);
+          let html_data = '<option value="">Select Highway Fuel Economy (km/l)</option>';
+          data.highways.forEach(function (data) {
+              html_data += `<option value="${data}">${data}</option>`
+          });
+          $("#id_highway_fuel_economy").html(html_data);
+          clear_dropdown = '<option value="">-</option>';
+          $("#id_maximum_seating").html(clear_dropdown);
+        }
+      });
+  });
+</script>
+
+<script type="text/javascript">
+$(document).on('change', "#id_highway_fuel_economy", function () {
+      var transmission_display = $("#id_transmission_display").val();
+      var wheel_system = $("#id_wheel_system").val();
+      var engine_type = $("#id_engine_type").val();
+      var displacement = $("#id_displacement").val();
+      var horsepower = $("#id_horsepower").val();
+      var transmission = $("#id_transmission").val();
+      var fuel = $("#id_fuel_type").val();
+      var body = $("#id_body_type").val();
+      var model = $("#id_model").val();
+      var make = $("#id_make").val();
+      $.ajax({
+        type: "POST",
+        url: "{% url 'getSeats' %}",
+        data: {
+          'csrfmiddlewaretoken': '{{ csrf_token }}',
+          'transmission_display': transmission_display,
+          'wheel_system': wheel_system,
+          'engine_type': engine_type,
+          'displacement': displacement,
+          'horsepower': horsepower,
+          'transmission': transmission,
+          'fuel': fuel,
+          'body': body,
+          'model': model,
+          'make': make,
+        },
+        success: function (data) {
+          console.log(data.seats);
+          let html_data = '<option value="">Select number of seats</option>';
+          data.seats.forEach(function (data) {
+              html_data += `<option value="${data}">${data}</option>`
+          });
+          $("#id_maximum_seating").html(html_data);
+        }
+      });
+  });
+</script>
 
 
       </div>

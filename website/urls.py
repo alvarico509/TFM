@@ -19,5 +19,9 @@ urlpatterns = [
     path('getEngineType', views.getEngineType, name='getEngineType'),
     path('getWheelSystem', views.getWheelSystem, name='getWheelSystem'),
     path('getGear', views.getGear, name='getGear'),
-    
+    path('getYear', views.getYear, name='getYear'),
+    path('getFuelTankVolume', views.getFuelTankVolume, name='getFuelTankVolume'),
+    path('getCityFuelEconomy', views.getCityFuelEconomy, name='getCityFuelEconomy'),
+    path('getHighwayFuelEconomy', views.getHighwayFuelEconomy, name='getHighwayFuelEconomy'),
+    path('getSeats', views.getSeats, name='getSeats'),
 ]
