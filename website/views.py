@@ -245,10 +245,10 @@ def getSeats(request):
 
 
 json_folder = settings.BASE_DIR / 'JSON'
-filepath = os.path.join(json_folder, os.path.basename("make_model_A.json"))
+filepath_2 = os.path.join(json_folder, os.path.basename("web_dic.json"))
 
 def return_model_by_make(make):
-    all_data = readJson(filepath)
+    all_data = readJson(filepath_2)
 
     all_models = []
 
@@ -258,9 +258,6 @@ def return_model_by_make(make):
         		all_models.append(x['model_name'])
 
     return all_models
-
-
-filepath_2 = os.path.join(json_folder, os.path.basename("web_dic.json"))
 
 def return_body_type(make, model):
     """ GET BODY_TYPE SELECTION BY MAKE AND MODEL INPUT """

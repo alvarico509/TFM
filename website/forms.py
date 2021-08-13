@@ -6,7 +6,7 @@ from django.conf import settings
 
 
 json_folder = settings.BASE_DIR / 'JSON'
-filepath = os.path.join(json_folder, os.path.basename("make_model_A.json"))
+filepath_2 = os.path.join(json_folder, os.path.basename("web_dic.json"))
 
 def readJson(filename):
     with open(filename, 'r') as fp:
@@ -14,7 +14,7 @@ def readJson(filename):
 
 def get_make():
     """ GET MAKE SELECTION """
-    all_data = readJson(filepath)
+    all_data = readJson(filepath_2)
     all_makes = []
     all_makes.append(["Default", "Select Make"])
 
@@ -34,21 +34,21 @@ IS_NEW_CHOICES = [
     ]
 
 EXTERIOR_COLOR_CHOICES = [
-    ('BLACK', 'Black'),
-    ('BLUE', 'Blue'),
-    ('BROWN', 'Brown'),
-    ('GOLD', 'Gold'),
-    ('GRAY', 'Gray'),
-    ('GREEN', 'Green'),
-    ('ORANGE', 'Orange'),
-    ('PINK', 'Pink'),
-    ('PURPLE', 'Purple'),
-    ('RED', 'Red'),
-    ('SILVER', 'Silver'),
-    ('TEAL', 'Teal'),
-    ('UNKNOWN', 'Select Color'),
-    ('WHITE', 'White'),
-    ('YELLOW', 'Yellow'),
+    ('Black', 'Black'),
+    ('Blue', 'Blue'),
+    ('Brown', 'Brown'),
+    ('Gold', 'Gold'),
+    ('Gray', 'Gray'),
+    ('Green', 'Green'),
+    ('Orange', 'Orange'),
+    ('Pink', 'Pink'),
+    ('Purple', 'Purple'),
+    ('Red', 'Red'),
+    ('Silver', 'Silver'),
+    ('Teal', 'Teal'),
+    ('Unknown', 'Select Color'),
+    ('White', 'White'),
+    ('Yellow', 'Yellow'),
 ]
 
 
@@ -70,7 +70,7 @@ class VehicleForm(forms.ModelForm):
     exterior_color = forms.ChoiceField(
                     choices = EXTERIOR_COLOR_CHOICES,
                     required = True,
-                    initial = 'UNKNOWN',
+                    initial = 'Unknown',
                     label='Exterior color:',
                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_exterior_color'}),
                     )
