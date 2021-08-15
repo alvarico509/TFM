@@ -33,7 +33,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<form class="" action="prediction" method="post">
+<form class="" action="prediction" method="post" onsubmit="return mySubmitFunction(event)">
           {% csrf_token %}
           {% for error in errors  %}
           <div class="alert alert-danger mb-4" role="alert">
@@ -143,11 +143,44 @@
             </div>
             <div class="form-group col-md-6">
               <button type="submit" class="btn btn-primary">Calculate</button>
+              <label id="submit_label"></label>
             </div>
         </form>
 
 
-        <script type="text/javascript">
+        
+
+        <script language="JavaScript"><!--
+        function mySubmitFunction(e) {
+          var maximum_seating = $("#id_maximum_seating").val();
+          var highway_fuel_economy = $("#id_highway_fuel_economy").val();
+          var city_fuel_economy = $("#id_city_fuel_economy").val();
+          var fuel_tank_volume = $("#id_fuel_tank_volume").val();
+          var year = $("#id_year").val();
+          var transmission_display = $("#id_transmission_display").val();
+          var wheel_system = $("#id_wheel_system").val();
+          var engine_type = $("#id_engine_type").val();
+          var displacement = $("#id_displacement").val();
+          var horsepower = $("#id_horsepower").val();
+          var transmission = $("#id_transmission").val();
+          var fuel = $("#id_fuel_type").val();
+          var body = $("#id_body_type").val();
+          var model = $("#id_model").val();
+          var make = $("#id_make").val();
+          let myVars = [make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system, transmission_display, year, fuel_tank_volume, city_fuel_economy, highway_fuel_economy, maximum_seating]
+
+          if (myVars.includes("") || myVars.includes("Empty")) {
+            document.getElementById('submit_label').innerHTML = 'Form incomplete. Please, fill out every field!';
+            e.preventDefault();
+            someBug();
+            return false;
+          } else {
+            return true;
+          }
+        }
+        </script>
+
+        <script type="text/javascript">        
         $(document).on('change', "#id_make", function () {
               var make = $(this).val();
               $.ajax({
