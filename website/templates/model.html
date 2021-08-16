@@ -70,13 +70,13 @@
               </select>
             </div>
             <div class="form-group col-md-6">
-              <label>Horsepower:</label>
+              <label>Horsepower (hp):</label>
               <select id="id_horsepower" class="form-control" name="horsepower">
                 <option value="Empty">-</option>
               </select>
             </div>
             <div class="form-group col-md-6">
-              <label>Engine displacement:</label>
+              <label>Engine displacement (cc):</label>
               <select id="id_displacement" class="form-control" name="displacement">
                 <option value="Empty">-</option>
               </select>
@@ -106,7 +106,7 @@
               </select>
             </div>
             <div class="form-group col-md-6">
-              <label>Fuel tank volume:</label>
+              <label>Fuel tank volume (gal):</label>
               <select id="id_fuel_tank_volume" class="form-control" name="fuel_tank_volume">
                 <option value="Empty">-</option>
               </select>
@@ -140,6 +140,10 @@
             <div class="form-group col-md-6">
               <label>Mileage (miles):</label>
               {{ form.mileage }}
+            </div>
+            <div row>
+              <div class="row row-pb-md">
+              </div>
             </div>
             <div class="form-group col-md-6">
               <button type="submit" class="btn btn-primary">Calculate</button>
@@ -730,5 +734,11 @@
       </div>
     </div>
   </div>
+
+  <div class="row">
+    <div class="row row-pb-md">
+  </div>
+  </div>
+
 
 {% endblock %} 

@@ -33,6 +33,41 @@
           <h2>Realización</h2>
           <p>Tras la valoración diversas ideas, se eligió dar vida al proyecto da El proyecto nace de un dataset público en Kaggle, llamado "US used cars dataset". 
           </p>
+
+
+      <div class="col-md-12 col-md-offset-0 text-left">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+
+      <body>
+        <pre><code class="python">
+        def fib(n):
+        a, b = 0, 1
+          while a < n:
+            print(a, end=' ')
+            a, b = b, a+b
+            print()
+        fib(1000)
+
+        # Quitamos las variables que no tienen sentido y que dificilmente vamos a utilizar en el proyecto en ningún momento.
+        cars = cars.drop(['daysonmarket', 'latitude', 'listing_id', 'longitude', 'sp_id'], axis=1)
+
+        # Quitamos también otras variables que quizá si que utilicemos más adelante, pero de momento, fuera.
+        cars = cars.drop(['vin', 'city', 'dealer_zip', 'description', 'listed_date', 'main_picture_url', 'major_options', 'power', 
+        'savings_amount', 'sp_name', 'torque', 'trim_name', 'trimId', 'wheel_system_display'], axis=1)
+
+        # Limpiando de variables que no debería meter en la web
+        cars = cars.drop(['back_legroom', 'franchise_dealer', 'front_legroom', 'height', 'length', 'seller_rating', 'wheelbase', 
+        'width', 'franchise_make', 'interior_color', 'exterior_color'], axis=1)
+
+        # Dropeo engine_cylinders porque parece igual que engine_type
+        cars = cars.drop(['engine_cylinders'], axis=1)
+      </code></pre>
+      </body>
+    </div>
+
           <h2>The Thesis</h2>
                   <p>The goals of this project are not precisely defined yet. We can easily achieve the requirements to get a passing score, but we want to challenge ourselves and see how far we can go now.</p>
                   <p>Building a regression model that predicts the price of a car using a dataset of 3 million rows and 66 columns would be laborious but easy, so we decided to go further.</p>
