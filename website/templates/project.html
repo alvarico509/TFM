@@ -4,6 +4,8 @@
 {% block title %} Project {% endblock %}
 {% block content %}
 
+
+
 <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image: url({% static 'website/images/img_project_main.jpg' %})">
   <div class="overlay"></div>
   <div class="gtco-container">
@@ -25,7 +27,51 @@
         <div class="text-center gtco-heading">
           <br>
           <br>
+          <h2>Website under construction!</h2>
           <h2>Introducción</h2>
+          
+          <p>Mileage es un trabajo fin de máster en big data y data Science de cinco alumnos de la Universidad Complutense de Madrid que tiene como objetivo generar predicciones acerca del valor de vehículos dadas ciertas características de los mismos.</p>
+          
+          <p>El equipo lo forman Alvaro Lozano, Andrea Lizondo, Mario Muriel, Pablo Abad y Pablo Casero.</p>
+          
+          <p>La motivación para realizar dicho proyecto fue la de poner en práctica los conocimientos adquiridos durante el curso para desarrollar una herramienta completamente funcional. Con este proyecto, el equipo ha querido retarse a si mismo, expandiendo sus límites y buscando soluciones para todos los problemas que han ido surgiendo, con el fin de prepararse para un entorno profesional de ciencia de datos.</p>
+          
+          <p>En el plano organizativo, se ha seguido una estrategia que trata de abordar primero aquellas fases que planteaban más problemas al equipo, progresando desde soluciones sencillas hasta las más complejas implementadas en el proyecto final. Esta forma de trabajar permitía al equipo tener un control absoluto, en la forma que habiendo solucionado los problemas al principio se sabía que no habría grandes trabas para alcanzar el objetivo final.</p>
+          
+          <p>Debido a diversos factores como la pandemia, el hecho de que la mayoría de los compañeros tuviesen que compaginar el trabajo con los estudios y que la liberación del TFM se realizase próxima al período vacacional, el trabajo en equipo planteaba un reto importante. El equipo ha estado a la altura para sobreponerse y la organización en este aspecto ha sido inmejorable. Gracias a plataformas colaborativas el equipo ha podido ir trabajando de forma conjunta en todo momento, aprovechando los puntos fuertes de cada uno y aprendiendo entre nosotros.</p>
+          
+          <p>Para la realización del proyecto se han utilizado varios recursos, como Google Cloud Platform (instancia de AI Notebooks), Kaggle, Kaggle Kernel, Google Collaboratory, Django y Github entre otros. El principal lenguaje de programación utilizado ha sido Python, aunque también R, SQL, HTML, Javascript, CSS o Bash.</p>
+
+          <p>La primera fase del proyecto es la importación u obtención del conjunto de datos. Tras contemplar distintas opciones, se decidió apostar por el dataset de Kaggle llamado “US used cars data” (https://www.kaggle.com/ananaymital/us-used-cars-dataset) puesto que ofrece una buena cantidad de registros (3 millones) y un gran número de variables que confiere al conjunto de datos bastante flexibilidad.</p>
+
+          <p>La segunda fase consistía en la verificación de la calidad de los datos para asegurar que los mismos son lo suficientemente buenos como para generar conclusiones y resultados. Incluyendo en esta parte el EDA. </p>
+
+          <p>En la tercera fase se ejecutó la limpieza de los datos, así como el feature engineering. Se eliminaron las variables con un porcentaje de valores nulos o incorrectos que superaban un determinado umbral, variables repetidas, así como aquellas con un poder de predicción nulo o casi nulo.</p>
+
+          <div class="col-md-12 col-md-offset-0 text-left">
+            <link rel="stylesheet"
+                  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/obsidian.min.css">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+            <script>hljs.initHighlightingOnLoad();</script>
+              <body>
+                <pre>
+                  <code class="python">
+                    threshold = 30
+                    columns = cars.isnull().sum() * 100 / len(cars) > threshold
+                    cars = cars[columns.index[~columns]]
+                    del columns
+                    #/---------------------------------------------------------------------------------------/
+                    cars = cars.drop(['daysonmarket', 'latitude', 'listing_id', 'longitude', 'sp_id'], axis=1)
+                  </code>
+                </pre>
+              </body>
+          <p>Se cambiaron también algunos tipos de datos y se limpiaron las unidades que acompañaban a los valores numéricos.</p>
+
+
+
+
+
+          <h2>Borrador. Ni caso a lo de debajo.</h2>
           <p>Mileage es un proyecto que tiene su origen en la necesidad de cubrir una necesidad en el ambito del mercado de vehículos de segunda mano. Calcular el precio de venta de un vehículo puede ser bastante complejo para muchas personas. En el mejor de los casos, la persona invertirá mucho tiempo estudiando el mercado a base de consultar uno y otro anuncio de vehículos similares al suyo. En el peor de los casos, la persona acabará en un servicio de tasación de vehículos, el cual le pedirá información personal antes de facilitarle la tasación de su vehículo. Dicho servicio le facilitará una tasación muy por debajo del valor de mercado de su vehículo para luego intentar comprárselo. Este no es un requisito banal, puesto que el negocio de estos servicios reside en la intermediación.</p>
           <p>Mileage es un proyecto de carácter académico que simula una aplicación web que ofrece un servicio gratuito de predición del precio de vehículos de segunda mano. La predicción se realiza a partir de un modelo de machine learning a partir de un dataset de 3 millones de registros extraídos en septiembre de 2020 de Cargurus, una página web estadounidense de compraventa de vehículos.</p>
           <p>El proyecto ha sido realizado por Alvaro Lozano, Andrea Lizondo, Mario Muriel, Pablo Abad y Pablo Casero.</p>
@@ -35,11 +81,7 @@
           </p>
 
 
-      <div class="col-md-12 col-md-offset-0 text-left">
-        <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
+      
 
       <body>
         <pre><code class="python">
@@ -50,6 +92,39 @@
             a, b = b, a+b
             print()
         fib(1000)
+
+        # Una vez quitadas aquellas variables con gran cantidad de NAs, quitamos aquellos registros que tengan algún NA.
+        s1 = cars.shape[0]
+        cars = cars.dropna()
+        del_na = s1 - cars.shape[0]
+        print("Se han eliminado {} filas".format(del_na))
+
+        del del_na
+        del s1
+
+        dic_transmission = {"A": "Automatic Transmission (A)", "CVT": "Continuously Variable Transmission (CVT)", 
+                    "Dual Clutch": "Dual Clutch Transmission (DCT)", "M": "Manual Transmission (M)"}
+        cars["transmission"].replace(dic_transmission, inplace=True)
+        del dic_transmission
+
+        dic_engine_type = {"I2": "Inline 2 cylinder", "I3": "Inline 3 cylinder", "I4": "Inline 4 cylinder", 
+                           "I5": "Inline 5 cylinder", "I6": "Inline 6 cylinder", "R2": "Rotary Engine", "Electric_Motor": "Electric Motor",
+                           "H4": "Boxer 4 cylinder", "H6": "Boxer 6 cylinder"}
+        cars["engine_type"].replace(dic_engine_type, inplace=True)
+        del dic_engine_type
+
+        dic_wheel_system = {"FWD": "Forward Wheel Drive (FWD)", "AWD": "All Wheel Drive (AWD)", "4WD": "Four Wheel Drive (4WD)", "RWD": "Rear Wheel Drive (RWD)",
+                            "4X2": "Two Wheel Drive (4X2)"}
+        cars["wheel_system"].replace(dic_wheel_system, inplace=True)
+        del dic_wheel_system
+
+        dic_listing_color = {"WHITE": "White", "BLACK": "Black", "SILVER": "Silver", "UNKNOWN": "Unknown", "GRAY": "Gray", "BLUE": "Blue", "RED": "Red",
+                             "GREEN": "Green", "BROWN": "Brown", "ORANGE": "Orange", "GOLD": "Gold", "TEAL": "Teal", "YELLOW": "Yellow", "PURPLE": "Purple",
+                             "PINK": "Pink"}
+        cars["listing_color"].replace(dic_listing_color, inplace=True)
+        del dic_listing_color
+
+
 
         # Quitamos las variables que no tienen sentido y que dificilmente vamos a utilizar en el proyecto en ningún momento.
         cars = cars.drop(['daysonmarket', 'latitude', 'listing_id', 'longitude', 'sp_id'], axis=1)
