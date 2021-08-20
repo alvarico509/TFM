@@ -41,16 +41,80 @@
           <p>Debido a diversos factores como la pandemia, el hecho de que la mayoría de los compañeros tuviesen que compaginar el trabajo con los estudios y que la liberación del TFM se realizase próxima al período vacacional, el trabajo en equipo planteaba un reto importante. El equipo ha estado a la altura para sobreponerse y la organización en este aspecto ha sido inmejorable. Gracias a plataformas colaborativas el equipo ha podido ir trabajando de forma conjunta en todo momento, con reuniones periódicas, aprovechando los puntos fuertes de cada uno y aprendiendo entre nosotros.</p>
           
           <p>Para la realización del proyecto se han utilizado varios recursos, como Google Cloud Platform (instancia de AI Notebooks), Kaggle, Kaggle Kernel, Google Collaboratory, Django y Github entre otros. El principal lenguaje de programación utilizado ha sido Python, aunque también R, SQL, HTML, Javascript, CSS o Bash.</p>
+          <div class="contain-img">
+            <img src="{% static 'website/images/img_project_gcp2.png' %}" alt="My image comment">
+            <figcaption>Fig.X Google Cloud Platform - AI Notebook - M76</figcaption>
+          </div>
+          
 
+          <h2>Importación de los datos</h2>
           <p>La primera fase del proyecto es la importación u obtención del conjunto de datos. Tras contemplar distintas opciones, se decidió apostar por el dataset de Kaggle llamado “US used cars data” (https://www.kaggle.com/ananaymital/us-used-cars-dataset) puesto que ofrece una buena cantidad de registros (3 millones) y un gran número de variables que confiere al conjunto de datos bastante flexibilidad.</p>
 
+          <h2>Análisis exploratorio de los datos</h2>
           <p>La segunda fase consistía en la verificación de la calidad de los datos para asegurar que los mismos son lo suficientemente buenos como para generar conclusiones y resultados. Incluyendo en esta parte el EDA. </p>
 
+          <h2>Transformación de los datos</h2>
           <p>En la tercera fase se ejecutó la limpieza de los datos, así como el feature engineering. Se eliminaron las variables con un porcentaje de valores nulos o incorrectos que superaban un determinado umbral, variables repetidas, así como aquellas con un poder de predicción nulo o cuasi nulo. También se realizaron cambios en los tipos de algunas variables, eliminación de las unidades junto al valor de la variable o imputación de valores nulos.</p>
 
           <p>Entre las partes más destacables de este proceso se encuentra la eliminación de registros en los que la variable faltante era de imperiosa necesidad. Véase el caso de la variable que indica el kilometraje (en millas) del vehículo, 'mileage'. Este paso dejó unas perdidas de casi 150.000 registros, lo que suponía un 5% de los mismos. Sin embargo, una pérdida asumible y justificada.</p>
 
           <p>Para el resto de variables se siguió una estrategia de imputación bastante fiable y que ofrecía muy buenos resultados. Gracias a la naturaleza de los datos y al conocimiento/estudio en el área de la automoción, nos fue posible determinar que combinación de variables definían de forma intrínseca otras variables. Sirva como ejemplo que para determinar el número de asientos de un vehículo basta con conocer marca, modelo y tipo de carrocería. No se descarta que puntualmente pueda haber excepciones, pero se asume el riesgo y como se ha mencionado anteriormente, esta estrategia mejoraba el modelo de forma considerable.</p>
+
+          <div class="col-md-12 col-md-offset-0 text-left">
+            <link rel="stylesheet"
+                  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/obsidian.min.css">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+            <script>hljs.initHighlightingOnLoad();</script>
+              <body>
+                <pre>
+                  <code class="python">
+                    # "maximum_seating" debería ser de las más fáciles de imputar. Solo necesitamos 
+                    # saber "make_name", "model_name" y "body_type" y en principio debería bastar.
+                    cars["avg_maximum_seating"] = cars.groupby(["make_name", "model_name", "body_type"])
+                    ["maximum_seating"].transform("mean")
+
+                    # Imputación city_fuel_economy. Características que definen el consumo de un coche: 
+                    # "body_type", "engine_displacement", "engine_type", "fuel_type", "horsepower", 
+                    # "make_name", "model_name", "transmission", "wheel_system", "year"
+                    cars["avg_city_fuel_economy"] = cars.groupby(["body_type", "engine_displacement", 
+                    "engine_type", "fuel_type", "horsepower", "make_name", "model_name",  
+                    "year"])['city_fuel_economy'].transform('mean')
+
+                    # Lo mismo para highway_fuel_economy
+                    cars["avg_highway_fuel_economy"] = cars.groupby(["body_type", "engine_displacement", 
+                    "engine_type", "fuel_type", "horsepower", "make_name", "model_name",  "year"])
+                    ['highway_fuel_economy'].transform('mean')
+
+                    # "horsepower" y "engine_displacement" tienen el mismo número de NAs, por lo que 
+                    # suponemos que son las mismas filas. No podemos utilizar una variable para
+                    # imputar la otra, así que utilizaremos el resto.
+                    cars["avg_horsepower"] = cars.groupby(["engine_type", "fuel_type", "make_name", 
+                    "model_name",  "year"])['horsepower'].transform('mean')
+                    cars["avg_engine_displacement"] = cars.groupby(["engine_type", "fuel_type", 
+                    "make_name", "model_name",  "year"])['engine_displacement'].transform('mean')
+
+                    # "fuel_tank_volume" dependerá de la marca, modelo y año.
+                    cars["avg_fuel_tank_volume"] = cars.groupby(["make_name", "model_name",  "year"])
+                    ['fuel_tank_volume'].transform('mean')
+
+                    # Sustitución de los valores NA
+                    cars['maximum_seating'] = np.where(cars['maximum_seating'].isna(), cars['avg_maximum_seating'], 
+                    cars['maximum_seating'])
+                    cars['city_fuel_economy'] = np.where(cars['city_fuel_economy'].isna(), cars['avg_city_fuel_economy'], 
+                    cars['city_fuel_economy'])
+                    cars['highway_fuel_economy'] = np.where(cars['highway_fuel_economy'].isna(), cars['avg_highway_fuel_economy'], 
+                    cars['highway_fuel_economy'])
+                    cars['horsepower'] = np.where(cars['horsepower'].isna(), cars['avg_horsepower'], cars['horsepower'])
+                    cars['engine_displacement'] = np.where(cars['engine_displacement'].isna(), cars['avg_engine_displacement'], 
+                    cars['engine_displacement'])
+                    cars['fuel_tank_volume'] = np.where(cars['fuel_tank_volume'].isna(), cars['avg_fuel_tank_volume'], 
+                    cars['fuel_tank_volume'])
+                    cars = cars.drop(['avg_maximum_seating', 'avg_city_fuel_economy', 'avg_highway_fuel_economy', 'avg_horsepower', 
+                    'avg_engine_displacement', 'avg_fuel_tank_volume'], axis=1)
+                  </code>
+                </pre>
+              </body>
+
 
           <p>Tras una primera fase de imputaciones para variables contínuas y categóricas por el método descrito, se procedió a una segunda fase de imputaciones para aquellos registros que no habían podido ser imputados (sirva otra vez el ejemplo anterior: en el caso de faltar una, o varias, de las tres variables (marca, modelo o tipo de carrocería) no podría imputarse el número de plazas del vehículo. En esta segunda fase se prescindió de algunas variables para imputar los valores ausentes. No obstante, tras realizar diversas pruebas con ello, se determinó que esta segunda fase no era una buena estrategia y se descartó.</p>
 
@@ -60,15 +124,47 @@
 
           <p>Hubo también que realizar correcciones para los vehículos eléctricos, ya que sus características mecánicas difieren mucho de aquellas de un vehículo de motor térmico y por tanto eran un caso especial que había que tratar con especial atención.</p>
 
+          <div class="col-md-12 col-md-offset-0 text-left">
+            <link rel="stylesheet"
+                  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/obsidian.min.css">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+            <script>hljs.initHighlightingOnLoad();</script>
+              <body>
+                <pre>
+                  <code class="python">
+                    # Los vehículos eléctricos son algo especiales y tienen muchos datos perdidos
+                    cars.loc[cars["fuel_type"] == "Electric", "engine_type"] = "Electric_Motor" 
+                    cars.loc[cars["fuel_type"] == "Electric", "transmission_display"] = 1 # los vehículos 
+                    #eléctricos no tienen marchas
+                    cars.loc[cars["fuel_type"] == "Electric", "horsepower"] = cars.horsepower.mean() # Solo hay 1 vehículo 
+                    #eléctrico cuyo valor de esta variable no sea NA
+                    cars.loc[cars["fuel_type"] == "Electric", "engine_displacement"] = cars.engine_displacement.mean()
+                    cars.loc[cars["fuel_type"] == "Electric", "fuel_tank_volume"] = cars.fuel_tank_volume.mean()
+                  </code>
+                </pre>
+              </body>
+          
+
           <p>Otra fase del procesado consistía en la recodificación por distintos motivos. A veces para agrupar valores que tenían el mismo sentido pero distinto valor, o a veces por el simple hecho de convertirlas en variables cómodas para el usuario final.</p>
 
           <p>Una vez obtenido un dataset limpio e interpretable se estructuró y organizó en la forma que sería utilizado finalmente por el usuario y se extrajo un archivo JSON para poder ser utilizado más tarde en la aplicación web para filtrar opciones de configuración de un vehículo.</p>
 
           <p>El siguiente paso en la preparación del conjunto de datos consistía en la transformación de las variables categóricas de forma que el modelo pudiese operar con ellas. Para ello se conviertieron dichas variables a dummies.</p>
 
+          <h2>Modelización</h2>
           <p>Ya preparado el conjunto de datos, se procedió al particionado de los mismos, utilizando un 80% de ellos para entrenar el modelo y el 20% restante para evaluarlo. El modelo utilizado fue un regresor de la librería CatBoost. Habiendo establecido una semilla y cambiando un parámetro a la vez, se probaron distintas configuraciones para determinar cual era el mejor modelo.</p>
 
           <p>Tras haber obtenido el mejor modelo, se extrajo el archivo 'pickle' para poder ser utilizado más tarde en la aplicación web.</p>
+
+          <h2>Evaluación</h2>
+          <p>...</p>
+
+          <h2>Implantación</h2>
+          <p>Tras todo el proceso anterior, en el que se obtiene un modelo con buenos resultados a partir de un dataset en crudo, llega el proceso en el cual se implanta el modelo en una aplicación para que pueda ser utilizada por el usuario final. Para su implantación se utiliza Django, que es un framework de desarrollo web de código abierto, escrito en Python, que respeta el patrón de diseño conocido como modelo–vista–controlador.</p>
+          <p>Utilizando Django se genera una aplicación con una interfaz visual atractiva y sencilla de manejar por un usuario cualquiera sin conocimientos en ciencia de datos o programación.</p>
+          <p>La aplicación se encuentra en un servidor en linea gracias a Heroku, que es una plataforma como servicio de computación en la Nube que soporta distintos lenguajes de programación.</p>
+          <p>Funcionamiento de la aplicación: En el servicio en linea, a través de desplegables dependientes en cascada se seleccionan las características que definen los vehículos gracias a que el archivo .JSON extraído del conjunto de datos se encuentra alojado en el servidor. Una vez seleccionadas todas las características, se ejecuta la acción de calcular, entonces, la aplicación utiliza el archivo pickle, en el que está guardado el algoritmo del modelo, para estimar el valor de mercado del vehículo. La aplicación luego devuelve la estimación junto a las características introducidas de forma que se puedan verificar los parámetros introducidos.</p>
+          <p>Asimismo, la </p>
 
           <div class="col-md-12 col-md-offset-0 text-left">
             <link rel="stylesheet"
