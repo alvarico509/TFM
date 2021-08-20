@@ -1918,6 +1918,7 @@ form label {
 
 .contain-img {
     object-fit: contain;
+    padding: 5;
 }
 .contain-img img {
     max-width: 100%;
