@@ -36,9 +36,9 @@
           
           <p>La motivación para realizar dicho proyecto fue la de poner en práctica los conocimientos adquiridos durante el curso para desarrollar una herramienta completamente funcional. Con este proyecto, el equipo ha querido retarse a si mismo, expandiendo sus límites y buscando soluciones para todos los problemas que han ido surgiendo, con el fin de prepararse para un entorno profesional de ciencia de datos.</p>
           
-          <p>En el plano organizativo, se ha seguido una estrategia que trata de abordar primero aquellas fases que planteaban más problemas al equipo, progresando desde soluciones sencillas hasta las más complejas implementadas en el proyecto final. Esta forma de trabajar permitía al equipo tener un control absoluto, en la forma que habiendo solucionado los problemas al principio se sabía que no habría grandes trabas para alcanzar el objetivo final.</p>
+          <p>En el plano organizativo, se ha seguido una estrategia que trata de abordar primero aquellas fases que planteaban más problemas al equipo, progresando desde soluciones sencillas hasta las más complejas implementadas en el proyecto final. Esta forma de trabajar permitía al equipo tener un control absoluto, en la forma que habiendo solucionado los problemas al principio se garantizaba la ausencia de grandes trabas para alcanzar el objetivo final.</p>
           
-          <p>Debido a diversos factores como la pandemia, el hecho de que la mayoría de los compañeros tuviesen que compaginar el trabajo con los estudios y que la liberación del TFM se realizase próxima al período vacacional, el trabajo en equipo planteaba un reto importante. El equipo ha estado a la altura para sobreponerse y la organización en este aspecto ha sido inmejorable. Gracias a plataformas colaborativas el equipo ha podido ir trabajando de forma conjunta en todo momento, aprovechando los puntos fuertes de cada uno y aprendiendo entre nosotros.</p>
+          <p>Debido a diversos factores como la pandemia, el hecho de que la mayoría de los compañeros tuviesen que compaginar el trabajo con los estudios y que la liberación del TFM se realizase próxima al período vacacional, el trabajo en equipo planteaba un reto importante. El equipo ha estado a la altura para sobreponerse y la organización en este aspecto ha sido inmejorable. Gracias a plataformas colaborativas el equipo ha podido ir trabajando de forma conjunta en todo momento, con reuniones periódicas, aprovechando los puntos fuertes de cada uno y aprendiendo entre nosotros.</p>
           
           <p>Para la realización del proyecto se han utilizado varios recursos, como Google Cloud Platform (instancia de AI Notebooks), Kaggle, Kaggle Kernel, Google Collaboratory, Django y Github entre otros. El principal lenguaje de programación utilizado ha sido Python, aunque también R, SQL, HTML, Javascript, CSS o Bash.</p>
 
@@ -46,7 +46,29 @@
 
           <p>La segunda fase consistía en la verificación de la calidad de los datos para asegurar que los mismos son lo suficientemente buenos como para generar conclusiones y resultados. Incluyendo en esta parte el EDA. </p>
 
-          <p>En la tercera fase se ejecutó la limpieza de los datos, así como el feature engineering. Se eliminaron las variables con un porcentaje de valores nulos o incorrectos que superaban un determinado umbral, variables repetidas, así como aquellas con un poder de predicción nulo o casi nulo.</p>
+          <p>En la tercera fase se ejecutó la limpieza de los datos, así como el feature engineering. Se eliminaron las variables con un porcentaje de valores nulos o incorrectos que superaban un determinado umbral, variables repetidas, así como aquellas con un poder de predicción nulo o cuasi nulo. También se realizaron cambios en los tipos de algunas variables, eliminación de las unidades junto al valor de la variable o imputación de valores nulos.</p>
+
+          <p>Entre las partes más destacables de este proceso se encuentra la eliminación de registros en los que la variable faltante era de imperiosa necesidad. Véase el caso de la variable que indica el kilometraje (en millas) del vehículo, 'mileage'. Este paso dejó unas perdidas de casi 150.000 registros, lo que suponía un 5% de los mismos. Sin embargo, una pérdida asumible y justificada.</p>
+
+          <p>Para el resto de variables se siguió una estrategia de imputación bastante fiable y que ofrecía muy buenos resultados. Gracias a la naturaleza de los datos y al conocimiento/estudio en el área de la automoción, nos fue posible determinar que combinación de variables definían de forma intrínseca otras variables. Sirva como ejemplo que para determinar el número de asientos de un vehículo basta con conocer marca, modelo y tipo de carrocería. No se descarta que puntualmente pueda haber excepciones, pero se asume el riesgo y como se ha mencionado anteriormente, esta estrategia mejoraba el modelo de forma considerable.</p>
+
+          <p>Tras una primera fase de imputaciones para variables contínuas y categóricas por el método descrito, se procedió a una segunda fase de imputaciones para aquellos registros que no habían podido ser imputados (sirva otra vez el ejemplo anterior: en el caso de faltar una, o varias, de las tres variables (marca, modelo o tipo de carrocería) no podría imputarse el número de plazas del vehículo. En esta segunda fase se prescindió de algunas variables para imputar los valores ausentes. No obstante, tras realizar diversas pruebas con ello, se determinó que esta segunda fase no era una buena estrategia y se descartó.</p>
+
+          <p>Tras el fallo del método anterior, se procedió a realizar imputaciones numéricas utilizando la media, pero sin duda se obtuvieron peores resultados. Finalmente se optó por eliminar los registros que no podían ser imputados a través de otras variables. Esta decisión se tomó en base a los distintos resultados obtenidos en varios modelos con distintas estrategias de imputación.</p>
+
+          <p>Nótese que en ningún momento se utiliza la variable que identifica el valor de mercado de un vehículo para imputar otras, puesto que esto supondría un claro caso de data leakage.</p>
+
+          <p>Hubo también que realizar correcciones para los vehículos eléctricos, ya que sus características mecánicas difieren mucho de aquellas de un vehículo de motor térmico y por tanto eran un caso especial que había que tratar con especial atención.</p>
+
+          <p>Otra fase del procesado consistía en la recodificación por distintos motivos. A veces para agrupar valores que tenían el mismo sentido pero distinto valor, o a veces por el simple hecho de convertirlas en variables cómodas para el usuario final.</p>
+
+          <p>Una vez obtenido un dataset limpio e interpretable se estructuró y organizó en la forma que sería utilizado finalmente por el usuario y se extrajo un archivo JSON para poder ser utilizado más tarde en la aplicación web para filtrar opciones de configuración de un vehículo.</p>
+
+          <p>El siguiente paso en la preparación del conjunto de datos consistía en la transformación de las variables categóricas de forma que el modelo pudiese operar con ellas. Para ello se conviertieron dichas variables a dummies.</p>
+
+          <p>Ya preparado el conjunto de datos, se procedió al particionado de los mismos, utilizando un 80% de ellos para entrenar el modelo y el 20% restante para evaluarlo. El modelo utilizado fue un regresor de la librería CatBoost. Habiendo establecido una semilla y cambiando un parámetro a la vez, se probaron distintas configuraciones para determinar cual era el mejor modelo.</p>
+
+          <p>Tras haber obtenido el mejor modelo, se extrajo el archivo 'pickle' para poder ser utilizado más tarde en la aplicación web.</p>
 
           <div class="col-md-12 col-md-offset-0 text-left">
             <link rel="stylesheet"
@@ -60,14 +82,12 @@
                     columns = cars.isnull().sum() * 100 / len(cars) > threshold
                     cars = cars[columns.index[~columns]]
                     del columns
-                    #/---------------------------------------------------------------------------------------/
+                    #...#
                     cars = cars.drop(['daysonmarket', 'latitude', 'listing_id', 'longitude', 'sp_id'], axis=1)
                   </code>
                 </pre>
               </body>
           <p>Se cambiaron también algunos tipos de datos y se limpiaron las unidades que acompañaban a los valores numéricos.</p>
-
-
 
 
 
