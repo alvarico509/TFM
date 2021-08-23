@@ -8,6 +8,7 @@ urlpatterns = [
     path('team', views.team, name="team"),
     path('project', views.project, name="project"),
     path('prediction', views.prediction, name="prediction"),
+    path('eda', views.eda, name="eda"),
     path('redirect', views.model, name="redirect"),
     path('get-model',views.getModel, name='get-model'),
     path('getBodyType', views.getBodyType, name='getBodyType'),

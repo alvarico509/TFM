@@ -64,6 +64,9 @@ def project(request):
 def redirect(request):
 	return render(request, 'model.html', {})
 
+def eda(request):
+	return render(request, 'eda.html', {})
+
 def model(request):
 	context = {}
 	if request.method == 'GET':
