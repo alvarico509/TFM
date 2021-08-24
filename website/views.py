@@ -423,6 +423,7 @@ def prediction(request):
 
 				car_specs = pd.DataFrame(var_dic, index=[0]).to_numpy().reshape(1,-1)
 				predictedPrice = round(int(myModel.predict(car_specs)))
+				predictedPrice = 0 if predictedPrice <= 0 else predictedPrice
 
 				return render(request, 'prediction.html', {'predictedPrice': predictedPrice,
 														   'make': make,
