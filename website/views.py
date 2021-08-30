@@ -64,6 +64,12 @@ def project(request):
 def redirect(request):
 	return render(request, 'model.html', {})
 
+def notebook(request):
+	return render(request, 'notebook.html', {})
+
+def finalEDA(request):
+	return render(request, 'final_eda.html', {})
+
 def eda(request):
 	return render(request, 'eda.html', {})
 
