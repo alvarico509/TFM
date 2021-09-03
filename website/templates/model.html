@@ -88,6 +88,24 @@
               </select>
             </div>
             <div class="form-group col-md-6">
+              <label>Torque power:</label>
+              <select id="id_torque_power" class="form-control" name="torque_power">
+                <option value="Empty">-</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Torque rpm:</label>
+              <select id="id_torque_rpm" class="form-control" name="torque_rpm">
+                <option value="Empty">-</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Power rpm:</label>
+              <select id="id_power_rpm" class="form-control" name="power_rpm">
+                <option value="Empty">-</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
               <label>Wheel system:</label>
               <select id="id_wheel_system" class="form-control" name="wheel_system">
                 <option value="Empty">-</option>
@@ -163,6 +181,9 @@
           var year = $("#id_year").val();
           var transmission_display = $("#id_transmission_display").val();
           var wheel_system = $("#id_wheel_system").val();
+          var power_rpm = $("#id_power_rpm").val();
+          var torque_rpm = $("#id_torque_rpm").val();
+          var torque_power = $("#id_torque_power").val();
           var engine_type = $("#id_engine_type").val();
           var displacement = $("#id_displacement").val();
           var horsepower = $("#id_horsepower").val();
@@ -171,7 +192,7 @@
           var body = $("#id_body_type").val();
           var model = $("#id_model").val();
           var make = $("#id_make").val();
-          let myVars = [make, model, body, fuel, transmission, horsepower, displacement, engine_type, wheel_system, transmission_display, year, fuel_tank_volume, city_fuel_economy, highway_fuel_economy, maximum_seating]
+          let myVars = [make, model, body, fuel, transmission, horsepower, displacement, engine_type, torque_power, torque_rpm, power_rpm, wheel_system, transmission_display, year, fuel_tank_volume, city_fuel_economy, highway_fuel_economy, maximum_seating]
 
           if (myVars.includes("") || myVars.includes("Empty")) {
             document.getElementById('submit_label').innerHTML = 'Form incomplete. Please, fill out every field!';
@@ -208,6 +229,9 @@
                   $("#id_horsepower").html(clear_dropdown);
                   $("#id_displacement").html(clear_dropdown);
                   $("#id_engine_type").html(clear_dropdown);
+                  $("#id_torque_power").html(clear_dropdown);
+                  $("#id_torque_rpm").html(clear_dropdown);
+                  $("#id_power_rpm").html(clear_dropdown);
                   $("#id_wheel_system").html(clear_dropdown);
                   $("#id_transmission_display").html(clear_dropdown);
                   $("#id_year").html(clear_dropdown);
@@ -243,6 +267,9 @@
                   $("#id_horsepower").html(clear_dropdown);
                   $("#id_displacement").html(clear_dropdown);
                   $("#id_engine_type").html(clear_dropdown);
+                  $("#id_torque_power").html(clear_dropdown);
+                  $("#id_torque_rpm").html(clear_dropdown);
+                  $("#id_power_rpm").html(clear_dropdown);
                   $("#id_wheel_system").html(clear_dropdown);
                   $("#id_transmission_display").html(clear_dropdown);
                   $("#id_year").html(clear_dropdown);
@@ -279,6 +306,9 @@
                   $("#id_horsepower").html(clear_dropdown);
                   $("#id_displacement").html(clear_dropdown);
                   $("#id_engine_type").html(clear_dropdown);
+                  $("#id_torque_power").html(clear_dropdown);
+                  $("#id_torque_rpm").html(clear_dropdown);
+                  $("#id_power_rpm").html(clear_dropdown);
                   $("#id_wheel_system").html(clear_dropdown);
                   $("#id_transmission_display").html(clear_dropdown);
                   $("#id_year").html(clear_dropdown);
@@ -316,6 +346,9 @@
                   $("#id_horsepower").html(clear_dropdown);
                   $("#id_displacement").html(clear_dropdown);
                   $("#id_engine_type").html(clear_dropdown);
+                  $("#id_torque_power").html(clear_dropdown);
+                  $("#id_torque_rpm").html(clear_dropdown);
+                  $("#id_power_rpm").html(clear_dropdown);
                   $("#id_wheel_system").html(clear_dropdown);
                   $("#id_transmission_display").html(clear_dropdown);
                   $("#id_year").html(clear_dropdown);
@@ -354,6 +387,9 @@
                   clear_dropdown = '<option value="">-</option>';
                   $("#id_displacement").html(clear_dropdown);
                   $("#id_engine_type").html(clear_dropdown);
+                  $("#id_torque_power").html(clear_dropdown);
+                  $("#id_torque_rpm").html(clear_dropdown);
+                  $("#id_power_rpm").html(clear_dropdown);
                   $("#id_wheel_system").html(clear_dropdown);
                   $("#id_transmission_display").html(clear_dropdown);
                   $("#id_year").html(clear_dropdown);
@@ -393,6 +429,9 @@
                   $("#id_displacement").html(html_data);
                   clear_dropdown = '<option value="">-</option>';
                   $("#id_engine_type").html(clear_dropdown);
+                  $("#id_torque_power").html(clear_dropdown);
+                  $("#id_torque_rpm").html(clear_dropdown);
+                  $("#id_power_rpm").html(clear_dropdown);
                   $("#id_wheel_system").html(clear_dropdown);
                   $("#id_transmission_display").html(clear_dropdown);
                   $("#id_year").html(clear_dropdown);
@@ -433,6 +472,9 @@
                   });
                   $("#id_engine_type").html(html_data);
                   clear_dropdown = '<option value="">-</option>';
+                  $("#id_torque_power").html(clear_dropdown);
+                  $("#id_torque_rpm").html(clear_dropdown);
+                  $("#id_power_rpm").html(clear_dropdown);
                   $("#id_wheel_system").html(clear_dropdown);
                   $("#id_transmission_display").html(clear_dropdown);
                   $("#id_year").html(clear_dropdown);
@@ -455,9 +497,150 @@
               var make = $("#id_make").val();
               $.ajax({
                 type: "POST",
+                url: "{% url 'getTorquePower' %}",
+                data: {
+                  'csrfmiddlewaretoken': '{{ csrf_token }}',
+                  'engine_type': engine_type,
+                  'displacement': displacement,
+                  'horsepower': horsepower,
+                  'transmission': transmission,
+                  'fuel': fuel,
+                  'body': body,
+                  'model': model,
+                  'make': make,
+                },
+                success: function (data) {
+                  console.log(data.torques);
+                  let html_data = '<option value="">Select Torque Power</option>';
+                  data.torques.forEach(function (data) {
+                      html_data += `<option value="${data}">${data}</option>`
+                  });
+                  $("#id_torque_power").html(html_data);
+                  clear_dropdown = '<option value="">-</option>';
+                  $("#id_torque_rpm").html(clear_dropdown);
+                  $("#id_power_rpm").html(clear_dropdown);
+                  $("#id_wheel_system").html(clear_dropdown);
+                  $("#id_transmission_display").html(clear_dropdown);
+                  $("#id_year").html(clear_dropdown);
+                  $("#id_fuel_tank_volume").html(clear_dropdown);
+                  $("#id_city_fuel_economy").html(clear_dropdown);
+                  $("#id_highway_fuel_economy").html(clear_dropdown);
+                  $("#id_maximum_seating").html(clear_dropdown);
+                }
+              });
+          });
+
+        $(document).on('change', "#id_torque_power", function () {
+              var torque_power = $(this).val();
+              var engine_type = $("#id_engine_type").val();
+              var displacement = $("#id_displacement").val();
+              var horsepower = $("#id_horsepower").val();
+              var transmission = $("#id_transmission").val();
+              var fuel = $("#id_fuel_type").val();
+              var body = $("#id_body_type").val();
+              var model = $("#id_model").val();
+              var make = $("#id_make").val();
+              $.ajax({
+                type: "POST",
+                url: "{% url 'getTorqueRpm' %}",
+                data: {
+                  'csrfmiddlewaretoken': '{{ csrf_token }}',
+                  'torque_power': torque_power,
+                  'engine_type': engine_type,
+                  'displacement': displacement,
+                  'horsepower': horsepower,
+                  'transmission': transmission,
+                  'fuel': fuel,
+                  'body': body,
+                  'model': model,
+                  'make': make,
+                },
+                success: function (data) {
+                  console.log(data.trpm);
+                  let html_data = '<option value="">Select Torque RPM</option>';
+                  data.trpm.forEach(function (data) {
+                      html_data += `<option value="${data}">${data}</option>`
+                  });
+                  $("#id_torque_rpm").html(html_data);
+                  clear_dropdown = '<option value="">-</option>';
+                  $("#id_power_rpm").html(clear_dropdown);
+                  $("#id_wheel_system").html(clear_dropdown);
+                  $("#id_transmission_display").html(clear_dropdown);
+                  $("#id_year").html(clear_dropdown);
+                  $("#id_fuel_tank_volume").html(clear_dropdown);
+                  $("#id_city_fuel_economy").html(clear_dropdown);
+                  $("#id_highway_fuel_economy").html(clear_dropdown);
+                  $("#id_maximum_seating").html(clear_dropdown);
+                }
+              });
+          });
+
+        $(document).on('change', "#id_torque_rpm", function () {
+              var torque_rpm = $(this).val();
+              var torque_power = $("#id_torque_power").val();
+              var engine_type = $("#id_engine_type").val();
+              var displacement = $("#id_displacement").val();
+              var horsepower = $("#id_horsepower").val();
+              var transmission = $("#id_transmission").val();
+              var fuel = $("#id_fuel_type").val();
+              var body = $("#id_body_type").val();
+              var model = $("#id_model").val();
+              var make = $("#id_make").val();
+              $.ajax({
+                type: "POST",
+                url: "{% url 'getPowerRpm' %}",
+                data: {
+                  'csrfmiddlewaretoken': '{{ csrf_token }}',
+                  'torque_rpm': torque_rpm,
+                  'torque_power': torque_power,
+                  'engine_type': engine_type,
+                  'displacement': displacement,
+                  'horsepower': horsepower,
+                  'transmission': transmission,
+                  'fuel': fuel,
+                  'body': body,
+                  'model': model,
+                  'make': make,
+                },
+                success: function (data) {
+                  console.log(data.prpm);
+                  let html_data = '<option value="">Select Power RPM</option>';
+                  data.prpm.forEach(function (data) {
+                      html_data += `<option value="${data}">${data}</option>`
+                  });
+                  $("#id_power_rpm").html(html_data);
+                  clear_dropdown = '<option value="">-</option>';
+                  $("#id_wheel_system").html(clear_dropdown);
+                  $("#id_transmission_display").html(clear_dropdown);
+                  $("#id_year").html(clear_dropdown);
+                  $("#id_fuel_tank_volume").html(clear_dropdown);
+                  $("#id_city_fuel_economy").html(clear_dropdown);
+                  $("#id_highway_fuel_economy").html(clear_dropdown);
+                  $("#id_maximum_seating").html(clear_dropdown);
+                }
+              });
+          });
+
+        $(document).on('change', "#id_power_rpm", function () {
+              var power_rpm = $(this).val();
+              var torque_rpm = $("#id_torque_rpm").val();
+              var torque_power = $("#id_torque_power").val();
+              var engine_type = $("#id_engine_type").val();
+              var displacement = $("#id_displacement").val();
+              var horsepower = $("#id_horsepower").val();
+              var transmission = $("#id_transmission").val();
+              var fuel = $("#id_fuel_type").val();
+              var body = $("#id_body_type").val();
+              var model = $("#id_model").val();
+              var make = $("#id_make").val();
+              $.ajax({
+                type: "POST",
                 url: "{% url 'getWheelSystem' %}",
                 data: {
                   'csrfmiddlewaretoken': '{{ csrf_token }}',
+                  'power_rpm': power_rpm,
+                  'torque_rpm': torque_rpm,
+                  'torque_power': torque_power,
                   'engine_type': engine_type,
                   'displacement': displacement,
                   'horsepower': horsepower,
@@ -487,6 +670,9 @@
         
         $(document).on('change', "#id_wheel_system", function () {
               var wheel_system = $(this).val();
+              var power_rpm = $("#id_power_rpm").val();
+              var torque_rpm = $("#id_torque_rpm").val();
+              var torque_power = $("#id_torque_power").val();
               var engine_type = $("#id_engine_type").val();
               var displacement = $("#id_displacement").val();
               var horsepower = $("#id_horsepower").val();
@@ -501,6 +687,9 @@
                 data: {
                   'csrfmiddlewaretoken': '{{ csrf_token }}',
                   'wheel_system': wheel_system,
+                  'power_rpm': power_rpm,
+                  'torque_rpm': torque_rpm,
+                  'torque_power': torque_power,
                   'engine_type': engine_type,
                   'displacement': displacement,
                   'horsepower': horsepower,
@@ -530,6 +719,9 @@
         $(document).on('change', "#id_transmission_display", function () {
               var transmission_display = $(this).val();
               var wheel_system = $("#id_wheel_system").val();
+              var power_rpm = $("#id_power_rpm").val();
+              var torque_rpm = $("#id_torque_rpm").val();
+              var torque_power = $("#id_torque_power").val();
               var engine_type = $("#id_engine_type").val();
               var displacement = $("#id_displacement").val();
               var horsepower = $("#id_horsepower").val();
@@ -545,6 +737,9 @@
                   'csrfmiddlewaretoken': '{{ csrf_token }}',
                   'transmission_display': transmission_display,
                   'wheel_system': wheel_system,
+                  'power_rpm': power_rpm,
+                  'torque_rpm': torque_rpm,
+                  'torque_power': torque_power,
                   'engine_type': engine_type,
                   'displacement': displacement,
                   'horsepower': horsepower,
@@ -573,6 +768,9 @@
         $(document).on('change', "#id_year", function () {
               var transmission_display = $("#id_transmission_display").val();
               var wheel_system = $("#id_wheel_system").val();
+              var power_rpm = $("#id_power_rpm").val();
+              var torque_rpm = $("#id_torque_rpm").val();
+              var torque_power = $("#id_torque_power").val();
               var engine_type = $("#id_engine_type").val();
               var displacement = $("#id_displacement").val();
               var horsepower = $("#id_horsepower").val();
@@ -588,6 +786,9 @@
                   'csrfmiddlewaretoken': '{{ csrf_token }}',
                   'transmission_display': transmission_display,
                   'wheel_system': wheel_system,
+                  'power_rpm': power_rpm,
+                  'torque_rpm': torque_rpm,
+                  'torque_power': torque_power,
                   'engine_type': engine_type,
                   'displacement': displacement,
                   'horsepower': horsepower,
@@ -615,6 +816,9 @@
         $(document).on('change', "#id_fuel_tank_volume", function () {
               var transmission_display = $("#id_transmission_display").val();
               var wheel_system = $("#id_wheel_system").val();
+              var power_rpm = $("#id_power_rpm").val();
+              var torque_rpm = $("#id_torque_rpm").val();
+              var torque_power = $("#id_torque_power").val();
               var engine_type = $("#id_engine_type").val();
               var displacement = $("#id_displacement").val();
               var horsepower = $("#id_horsepower").val();
@@ -630,6 +834,9 @@
                   'csrfmiddlewaretoken': '{{ csrf_token }}',
                   'transmission_display': transmission_display,
                   'wheel_system': wheel_system,
+                  'power_rpm': power_rpm,
+                  'torque_rpm': torque_rpm,
+                  'torque_power': torque_power,
                   'engine_type': engine_type,
                   'displacement': displacement,
                   'horsepower': horsepower,
@@ -656,6 +863,9 @@
         $(document).on('change', "#id_city_fuel_economy", function () {
               var transmission_display = $("#id_transmission_display").val();
               var wheel_system = $("#id_wheel_system").val();
+              var power_rpm = $("#id_power_rpm").val();
+              var torque_rpm = $("#id_torque_rpm").val();
+              var torque_power = $("#id_torque_power").val();
               var engine_type = $("#id_engine_type").val();
               var displacement = $("#id_displacement").val();
               var horsepower = $("#id_horsepower").val();
@@ -671,6 +881,9 @@
                   'csrfmiddlewaretoken': '{{ csrf_token }}',
                   'transmission_display': transmission_display,
                   'wheel_system': wheel_system,
+                  'power_rpm': power_rpm,
+                  'torque_rpm': torque_rpm,
+                  'torque_power': torque_power,
                   'engine_type': engine_type,
                   'displacement': displacement,
                   'horsepower': horsepower,
@@ -696,6 +909,9 @@
         $(document).on('change', "#id_highway_fuel_economy", function () {
               var transmission_display = $("#id_transmission_display").val();
               var wheel_system = $("#id_wheel_system").val();
+              var power_rpm = $("#id_power_rpm").val();
+              var torque_rpm = $("#id_torque_rpm").val();
+              var torque_power = $("#id_torque_power").val();
               var engine_type = $("#id_engine_type").val();
               var displacement = $("#id_displacement").val();
               var horsepower = $("#id_horsepower").val();
@@ -711,6 +927,9 @@
                   'csrfmiddlewaretoken': '{{ csrf_token }}',
                   'transmission_display': transmission_display,
                   'wheel_system': wheel_system,
+                  'power_rpm': power_rpm,
+                  'torque_rpm': torque_rpm,
+                  'torque_power': torque_power,
                   'engine_type': engine_type,
                   'displacement': displacement,
                   'horsepower': horsepower,
