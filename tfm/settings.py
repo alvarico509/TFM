@@ -139,10 +139,12 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST_USER = 'admin@mileage.one'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = '587'
-EMAIL_USER = 'mileageml@gmail.com'
-EMAIL_HOST_PASSWORD = 'mileage2021'
+EMAIL_PORT = 587
+EMAIL_USER = 'admin@mileage.one'
+EMAIL_HOST_PASSWORD = 'nope!'
 EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = False
 
