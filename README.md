@@ -1,6 +1,6 @@
 # Mileage - TFM
 
-## Setup
+## Setup (local run)
 
 The first thing to do is to clone the repository:
 
